@@ -1,30 +1,40 @@
 'use client';
 
+import type { Tag } from '@/types/Post';
 import { Plus, X } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
-
+import { useEffect, useState } from 'react';
+import { toast } from 'sonner';
 import { MarkdownEditor } from '@/components/MarkdownEditor';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { tags as allTags } from '@/data/dummy';
+import { postsService, tagsService } from '@/libs/api';
 import { BlogNavbar } from '@/templates/BlogNavbar';
-
-type Tag = {
-  id: number;
-  name: string;
-};
 
 export const WritePostPage = () => {
   const router = useRouter();
   const t = useTranslations('BlogWrite');
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
+  const [allTags, setAllTags] = useState<Tag[]>([]);
   const [selectedTags, setSelectedTags] = useState<Tag[]>([]);
   const [customTagInput, setCustomTagInput] = useState('');
   const [errors, setErrors] = useState<{ title?: string; content?: string; tags?: string }>({});
   const [isPublishing, setIsPublishing] = useState(false);
+
+  useEffect(() => {
+    const fetchTags = async () => {
+      try {
+        const response = await tagsService.getAllTags();
+        setAllTags(response);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    fetchTags();
+  }, []);
 
   const validate = () => {
     const newErrors: { title?: string; content?: string; tags?: string } = {};
@@ -52,10 +62,16 @@ export const WritePostPage = () => {
 
     setIsPublishing(true);
 
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 1000));
-
-    // TODO: Save post to backend
+    try {
+      await postsService.createPost({
+        title,
+        content,
+        tags: selectedTags.map(tag => tag.name),
+      });
+      toast('Your post has been created successfully.');
+    } catch (error) {
+      console.error('Error handling new post:', error);
+    }
     // console.log('Publishing:', { title, content, tags: selectedTags });
 
     // Redirect to blog list
@@ -93,9 +109,8 @@ export const WritePostPage = () => {
       return;
     }
 
-    // Add custom tag with negative ID to distinguish from predefined
     const newTag: Tag = {
-      id: -(Date.now()), // Negative ID for custom tags
+      id: crypto.randomUUID(),
       name: tagName,
     };
 
@@ -104,7 +119,7 @@ export const WritePostPage = () => {
     setErrors(prev => ({ ...prev, tags: undefined }));
   };
 
-  const removeTag = (tagId: number) => {
+  const removeTag = (tagId: string) => {
     setSelectedTags(prev => prev.filter(t => t.id !== tagId));
     setErrors(prev => ({ ...prev, tags: undefined }));
   };

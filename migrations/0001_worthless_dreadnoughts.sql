@@ -10,7 +10,7 @@ CREATE TABLE "comments" (
 CREATE TABLE "post_tags" (
 	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
 	"post_id" uuid NOT NULL,
-	"tag_id" integer NOT NULL
+	"tag_id" uuid NOT NULL
 );
 --> statement-breakpoint
 CREATE TABLE "posts" (
@@ -23,7 +23,7 @@ CREATE TABLE "posts" (
 );
 --> statement-breakpoint
 CREATE TABLE "tags" (
-	"id" serial PRIMARY KEY NOT NULL,
+	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
 	"name" varchar(50) NOT NULL,
 	"created_at" timestamp DEFAULT now() NOT NULL,
 	"updated_at" timestamp DEFAULT now() NOT NULL,

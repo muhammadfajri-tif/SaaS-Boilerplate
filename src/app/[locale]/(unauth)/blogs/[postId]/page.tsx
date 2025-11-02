@@ -1,15 +1,18 @@
 'use client';
 
+import type { Post } from '@/types/Post';
 import { ArrowLeft, Calendar, Facebook, Link2, Linkedin, MessageCircle, Twitter, User } from 'lucide-react';
 import Link from 'next/link';
 import { useParams, useRouter } from 'next/navigation';
-import { useState } from 'react';
 
+import { useEffect, useState } from 'react';
 import { ExportPDFButton } from '@/components/ExportPDFButton';
 import { MarkdownPreviewComponent } from '@/components/MarkdownPreview';
+import { BlogPostDetailSkeleton } from '@/components/skeletons/PostSkeletons';
 import { Button } from '@/components/ui/button';
-import { posts as dummyPosts, users } from '@/data/dummy';
+import { users } from '@/data/dummy';
 import { Section } from '@/features/landing/Section';
+import { postsService } from '@/libs/api';
 import { BlogNavbar } from '@/templates/BlogNavbar';
 
 export default function BlogPostDetailPage() {
@@ -17,16 +20,60 @@ export default function BlogPostDetailPage() {
   const router = useRouter();
   const postId = params.postId as string;
 
-  // Find post by ID
-  const post = dummyPosts.find(p => p.id === postId);
+  const [post, setPost] = useState<Post>();
+  const [isLoading, setIsLoading] = useState(true);
 
   // Find author
-  const author = post ? users.find(u => u.username === post.userId) : null;
+  const author = post ? users.find(u => u.username === post.userId) : null; // get list of users
 
   // Mock comment functionality
   const [comments, setComments] = useState(post?.comments || []);
   const [newComment, setNewComment] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  useEffect(() => {
+    const fetchPost = async () => {
+      try {
+        setIsLoading(true);
+        const response = await postsService.getPost(postId);
+        setPost(response);
+        setComments(response.comments);
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchPost();
+  }, [postId]);
+
+  if (isLoading) {
+    return (
+      <>
+        <BlogNavbar />
+        <div className="min-h-screen bg-white dark:bg-gray-950">
+          {/* Back Button */}
+          <div className="border-b border-gray-200 dark:border-gray-800">
+            <Section className="py-4">
+              <button
+                type="button"
+                onClick={() => router.back()}
+                className="flex items-center gap-2 text-sm text-gray-600 transition-colors hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-100"
+              >
+                <ArrowLeft className="size-4" />
+                Back
+              </button>
+            </Section>
+          </div>
+
+          <Section className="py-12">
+            <BlogPostDetailSkeleton />
+          </Section>
+        </div>
+      </>
+    );
+  }
 
   if (!post) {
     return (
@@ -59,15 +106,10 @@ export default function BlogPostDetailPage() {
 
     setIsSubmitting(true);
 
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 500));
-
-    const comment = {
-      id: `comment-${Date.now()}`,
-      postId: post.id,
-      userId: 'alice',
+    const comment = await postsService.createComment(postId, {
+      userId: 'alice', // TODO: get user data
       content: newComment,
-    };
+    });
 
     setComments([...comments, comment]);
     setNewComment('');

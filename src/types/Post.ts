@@ -16,7 +16,7 @@ export const updatePostSchema = z.object({
 
 // Type definitions for Blog Post system
 export type Tag = {
-  id: number;
+  id: string;
   name: string;
 };
 
