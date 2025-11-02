@@ -50,11 +50,11 @@ export const users = [
 ];
 
 export const tags = [
-  { id: 1, name: 'Technology' },
-  { id: 2, name: 'Programming' },
-  { id: 3, name: 'Web Development' },
-  { id: 4, name: 'Design' },
-  { id: 5, name: 'Productivity' },
+  { id: 'a1b2c3d4-e5f6-7890-abcd-ef1234567890', name: 'technology' },
+  { id: 'b2c3d4e5-f6f7-4901-bcde-f23456789012', name: 'programming' },
+  { id: 'c3d4e5f6-f7f8-4012-cdef-345678901234', name: 'web development' },
+  { id: 'd4e5f6f7-f8f9-4123-defa-456789012345', name: 'design' },
+  { id: 'e5f6f7f8-f9fa-4234-efab-567890123456', name: 'productivity' },
 ];
 
 export const comments = [
@@ -114,8 +114,8 @@ export const posts = [
     content:
       'React hooks allow you to use state and lifecycle methods in functional components. Here\'s a quick overview of `useState`, `useEffect`, and `useContext`.',
     tags: [
-      { id: 2, name: 'Programming' },
-      { id: 3, name: 'Web Development' },
+      { id: 'b2c3d4e5-f6f7-4901-bcde-f23456789012', name: 'Programming' },
+      { id: 'c3d4e5f6-f7f8-4012-cdef-345678901234', name: 'Web Development' },
     ],
     comments: [
       {
@@ -140,7 +140,7 @@ export const posts = [
     title: 'Async JavaScript Simplified',
     content:
       'JavaScript\'s asynchronous nature can be confusing. Let\'s break down **callbacks**, **promises**, and **async/await** with examples.',
-    tags: [{ id: 2, name: 'Programming' }],
+    tags: [{ id: 'b2c3d4e5-f6f7-4901-bcde-f23456789012', name: 'Programming' }],
     comments: [
       {
         id: '90d2f1c2-8d84-4c62-b2de-7fae3e44cdb4',
@@ -158,8 +158,8 @@ export const posts = [
     content:
       'Accessibility ensures everyone can use your product. Consider **contrast ratios**, **keyboard navigation**, and **ARIA labels**.',
     tags: [
-      { id: 4, name: 'Design' },
-      { id: 3, name: 'Web Development' },
+      { id: 'd4e5f6f7-f8f9-4123-defa-456789012345', name: 'Design' },
+      { id: 'c3d4e5f6-f7f8-4012-cdef-345678901234', name: 'Web Development' },
     ],
     comments: [
       {
@@ -178,8 +178,8 @@ export const posts = [
     content:
       'Visual Studio Code offers powerful extensions for developers. We\'ll cover **shortcuts**, **themes**, and **debugging tools**.',
     tags: [
-      { id: 5, name: 'Productivity' },
-      { id: 2, name: 'Programming' },
+      { id: 'e5f6f7f8-f9fa-4234-efab-567890123456', name: 'Productivity' },
+      { id: 'b2c3d4e5-f6f7-4901-bcde-f23456789012', name: 'Programming' },
     ],
     comments: [
       {
@@ -197,8 +197,8 @@ export const posts = [
     content:
       'Learn how to handle thousands of requests efficiently using **clustering**, **load balancing**, and **worker threads**.',
     tags: [
-      { id: 1, name: 'Technology' },
-      { id: 2, name: 'Programming' },
+      { id: 'a1b2c3d4-e5f6-7890-abcd-ef1234567890', name: 'Technology' },
+      { id: 'b2c3d4e5-f6f7-4901-bcde-f23456789012', name: 'Programming' },
     ],
     comments: [
       {
@@ -216,7 +216,7 @@ export const posts = [
     title: 'Writing Clean Markdown',
     content:
       'Markdown is simple yet powerful. Here\'s how to use **headings**, **lists**, and **code blocks** effectively.',
-    tags: [{ id: 5, name: 'Productivity' }],
+    tags: [{ id: 'e5f6f7f8-f9fa-4234-efab-567890123456', name: 'Productivity' }],
     comments: [
       {
         id: '5c6ef71a-0d19-4f70-b0d2-fbaac5c06de1',
@@ -233,8 +233,8 @@ export const posts = [
     content:
       'Docker makes it easy to package and deploy your app. Learn about **containers**, **images**, and **volumes**.',
     tags: [
-      { id: 1, name: 'Technology' },
-      { id: 2, name: 'Programming' },
+      { id: 'a1b2c3d4-e5f6-7890-abcd-ef1234567890', name: 'Technology' },
+      { id: 'b2c3d4e5-f6f7-4901-bcde-f23456789012', name: 'Programming' },
     ],
     comments: [],
   },
@@ -244,7 +244,7 @@ export const posts = [
     title: 'Why Design Systems Matter',
     content:
       'A design system maintains **consistency** and improves **collaboration**. Here\'s how to build one effectively.',
-    tags: [{ id: 4, name: 'Design' }],
+    tags: [{ id: 'd4e5f6f7-f8f9-4123-defa-456789012345', name: 'Design' }],
     comments: [],
   },
   {
@@ -254,8 +254,8 @@ export const posts = [
     content:
       'Learn the basics of cloud deployment using **Vercel**, **Netlify**, or **AWS Amplify**.',
     tags: [
-      { id: 1, name: 'Technology' },
-      { id: 3, name: 'Web Development' },
+      { id: 'a1b2c3d4-e5f6-7890-abcd-ef1234567890', name: 'Technology' },
+      { id: 'c3d4e5f6-f7f8-4012-cdef-345678901234', name: 'Web Development' },
     ],
     comments: [],
   },
@@ -266,8 +266,8 @@ export const posts = [
     content:
       'Techniques such as **lazy loading**, **code splitting**, and **caching** can drastically improve performance.',
     tags: [
-      { id: 3, name: 'Web Development' },
-      { id: 5, name: 'Productivity' },
+      { id: 'c3d4e5f6-f7f8-4012-cdef-345678901234', name: 'Web Development' },
+      { id: 'e5f6f7f8-f9fa-4234-efab-567890123456', name: 'Productivity' },
     ],
     comments: [],
   },

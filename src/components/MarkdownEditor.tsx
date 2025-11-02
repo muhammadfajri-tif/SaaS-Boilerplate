@@ -3,6 +3,7 @@
 import type { Instance } from 'tippy.js';
 import Link from '@tiptap/extension-link';
 import Placeholder from '@tiptap/extension-placeholder';
+import { Markdown } from '@tiptap/markdown';
 import { ReactRenderer } from '@tiptap/react';
 import { EditorContent, useEditor } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
@@ -120,6 +121,7 @@ export function MarkdownEditor({
           },
         },
       }),
+      Markdown,
     ],
     content: value,
     editorProps: {
@@ -128,14 +130,14 @@ export function MarkdownEditor({
       },
     },
     onUpdate: ({ editor: updatedEditor }) => {
-      const html = updatedEditor.getHTML();
-      onChange(html);
+      const markdown = updatedEditor.getMarkdown();
+      onChange(markdown);
     },
   });
 
   // Update editor content when value prop changes
   useEffect(() => {
-    if (editor && value !== editor.getHTML()) {
+    if (editor && value !== editor.getMarkdown()) {
       editor.commands.setContent(value);
     }
   }, [value, editor]);

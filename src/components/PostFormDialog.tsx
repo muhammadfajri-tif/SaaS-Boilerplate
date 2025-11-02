@@ -23,7 +23,7 @@ type Post = {
   userId: string;
   title: string;
   content: string;
-  tags: Array<{ id: number; name: string }>;
+  tags: Array<{ id: string; name: string }>;
   comments: any[];
 };
 
@@ -44,7 +44,7 @@ export function PostFormDialog({
 }: PostFormDialogProps) {
   const [title, setTitle] = useState(post?.title || '');
   const [content, setContent] = useState(post?.content || '');
-  const [selectedTagIds, setSelectedTagIds] = useState<number[]>(
+  const [selectedTagIds, setSelectedTagIds] = useState<string[]>(
     post?.tags.map(t => t.id) || [],
   );
   const [errors, setErrors] = useState<{ title?: string; content?: string }>({});
@@ -97,7 +97,7 @@ export function PostFormDialog({
     onOpenChange(false);
   };
 
-  const toggleTag = (tagId: number) => {
+  const toggleTag = (tagId: string) => {
     setSelectedTagIds(prev =>
       prev.includes(tagId)
         ? prev.filter(id => id !== tagId)

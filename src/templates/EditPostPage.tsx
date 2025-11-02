@@ -1,19 +1,15 @@
 'use client';
 
+import type { Tag } from '@/types/Post';
 import { Plus, X } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
-
+import { toast } from 'sonner';
 import { MarkdownEditor } from '@/components/MarkdownEditor';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { posts, tags } from '@/data/dummy';
+import { postsService, tagsService } from '@/libs/api';
 import { BlogNavbar } from '@/templates/BlogNavbar';
-
-type Tag = {
-  id: number;
-  name: string;
-};
 
 type EditPostPageProps = {
   postId: string;
@@ -23,6 +19,7 @@ export const EditPostPage = ({ postId }: EditPostPageProps) => {
   const router = useRouter();
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
+  const [allTags, setAllTags] = useState<Tag[]>([]);
   const [selectedTags, setSelectedTags] = useState<Tag[]>([]);
   const [customTagInput, setCustomTagInput] = useState('');
   const [errors, setErrors] = useState<{ title?: string; content?: string; tags?: string }>({});
@@ -31,8 +28,8 @@ export const EditPostPage = ({ postId }: EditPostPageProps) => {
 
   // Load post data
   useEffect(() => {
-    const loadPost = () => {
-      const post = posts.find(p => p.id === postId);
+    const loadPost = async () => {
+      const post = await postsService.getPost(postId);
       if (post) {
         setTitle(post.title);
         setContent(post.content);
@@ -43,9 +40,18 @@ export const EditPostPage = ({ postId }: EditPostPageProps) => {
         router.push('/blogs');
       }
     };
+    const fetchTags = async () => {
+      try {
+        const response = await tagsService.getAllTags();
+        setAllTags(response);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
 
+    fetchTags();
     loadPost();
-  }, [postId, router, setTitle, setContent, setSelectedTags, setIsLoading]);
+  }, [postId, router]);
 
   const validate = () => {
     const newErrors: { title?: string; content?: string; tags?: string } = {};
@@ -73,10 +79,16 @@ export const EditPostPage = ({ postId }: EditPostPageProps) => {
 
     setIsUpdating(true);
 
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 1000));
-
-    // TODO: Update post in backend
+    try {
+      await postsService.updatePost(postId, {
+        title,
+        content,
+        tags: selectedTags.map(tag => tag.name),
+      });
+      toast('Your post has been updated successfully.');
+    } catch (error) {
+      console.error('Error updating post:', error);
+    }
     // console.log('Updating post:', { id: postId, title, content, tags: selectedTags });
 
     // Redirect to post detail
@@ -101,9 +113,8 @@ export const EditPostPage = ({ postId }: EditPostPageProps) => {
       return;
     }
 
-    // Add custom tag with negative ID to distinguish from predefined
     const newTag: Tag = {
-      id: -(Date.now()), // Negative ID for custom tags
+      id: crypto.randomUUID(),
       name: tagName,
     };
 
@@ -112,7 +123,7 @@ export const EditPostPage = ({ postId }: EditPostPageProps) => {
     setErrors(prev => ({ ...prev, tags: undefined }));
   };
 
-  const removeTag = (tagId: number) => {
+  const removeTag = (tagId: string) => {
     setSelectedTags(prev => prev.filter(t => t.id !== tagId));
     setErrors(prev => ({ ...prev, tags: undefined }));
   };
@@ -271,7 +282,7 @@ export const EditPostPage = ({ postId }: EditPostPageProps) => {
                 Or Select from Topics
               </h4>
               <div className="flex flex-wrap gap-2">
-                {tags.map((tag) => {
+                {allTags.map((tag) => {
                   const isSelected = selectedTags.some(t => t.id === tag.id);
                   return (
                     <button

@@ -64,7 +64,7 @@ export const todoSchema = pgTable('todo', {
 
 // Tag table
 export const tags = pgTable('tags', {
-  id: serial('id').primaryKey(),
+  id: uuid('id').defaultRandom().primaryKey(),
   name: varchar('name', { length: 50 }).notNull().unique(),
   createdAt: timestamp('created_at').defaultNow().notNull(),
   updatedAt: timestamp('updated_at').defaultNow().notNull(),
@@ -98,7 +98,7 @@ export const postTags = pgTable('post_tags', {
   postId: uuid('post_id')
     .notNull()
     .references(() => posts.id, { onDelete: 'cascade' }),
-  tagId: integer('tag_id')
+  tagId: uuid('tag_id')
     .notNull()
     .references(() => tags.id, { onDelete: 'cascade' }),
 });
