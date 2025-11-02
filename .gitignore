@@ -49,3 +49,16 @@ local
 
 # vercel
 .vercel
+
+# Express server
+server/node_modules/
+server/.env
+server/.env.local
+server/.env.production
+server/.env.staging
+server/dist/
+server/build/
+server/logs/
+server/*.log
+server/coverage/
+server/.nyc_output/
