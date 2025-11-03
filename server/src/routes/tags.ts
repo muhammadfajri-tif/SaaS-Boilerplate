@@ -7,7 +7,7 @@ import { tags } from '../utils/schema';
 export const tagsRouter = Router();
 
 // GET /api/tags - Get all tags
-tagsRouter.get('/', async (req, res) => {
+tagsRouter.get('/', async (_, res) => {
   try {
     const allTags = await db
       .select()

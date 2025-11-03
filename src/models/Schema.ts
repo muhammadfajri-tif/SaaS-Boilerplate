@@ -1,7 +1,6 @@
 import { relations } from 'drizzle-orm';
 import {
   bigint,
-  integer,
   pgTable,
   serial,
   text,

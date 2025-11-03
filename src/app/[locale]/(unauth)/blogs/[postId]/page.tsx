@@ -221,7 +221,6 @@ export default function BlogPostDetailPage() {
               <div className="prose prose-lg max-w-none dark:prose-invert">
                 <MarkdownPreviewComponent
                   content={post.content}
-                  className="text-gray-700 dark:text-gray-300"
                 />
               </div>
 

@@ -5,6 +5,7 @@ import { Markdown } from '@tiptap/markdown';
 import { EditorContent, useEditor } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import { useEffect } from 'react';
+import 'tippy.js/dist/tippy.css';
 import '../components/tiptap-styles.css';
 
 type MarkdownPreviewProps = {
@@ -14,7 +15,6 @@ type MarkdownPreviewProps = {
 
 export function MarkdownPreviewComponent({
   content,
-  className,
 }: MarkdownPreviewProps) {
   const editor = useEditor({
     immediatelyRender: false,
@@ -33,10 +33,9 @@ export function MarkdownPreviewComponent({
       }),
       Markdown,
     ],
-    content,
     editorProps: {
       attributes: {
-        class: `focus:outline-none ${className}`,
+        class: `focus:outline-none text-gray-700 dark:text-gray-300`,
       },
     },
   });
@@ -52,6 +51,8 @@ export function MarkdownPreviewComponent({
   }
 
   return (
-    <EditorContent editor={editor} />
+    <div className="medium-editor">
+      <EditorContent editor={editor} />
+    </div>
   );
 }

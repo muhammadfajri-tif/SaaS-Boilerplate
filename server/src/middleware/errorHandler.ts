@@ -7,7 +7,7 @@ export type ApiError = {
 
 export function errorHandler(
   err: ApiError,
-  req: Request,
+  _: Request,
   res: Response,
 ): void {
   console.error('Error:', err);

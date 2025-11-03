@@ -138,7 +138,7 @@ export function MarkdownEditor({
   // Update editor content when value prop changes
   useEffect(() => {
     if (editor && value !== editor.getMarkdown()) {
-      editor.commands.setContent(value);
+      editor.commands.setContent(value, { contentType: 'markdown' });
     }
   }, [value, editor]);
 

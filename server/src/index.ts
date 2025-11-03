@@ -33,7 +33,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(morgan('combined'));
 
 // Health check endpoint
-app.get('/health', (req, res) => {
+app.get('/health', (_, res) => {
   res.json({
     status: 'OK',
     message: 'Server is running',
@@ -47,7 +47,7 @@ app.use('/api/posts', postsRouter);
 app.use('/api/tags', tagsRouter);
 
 // 404 handler
-app.use((req, res) => {
+app.use((_, res) => {
   res.status(404).json({
     success: false,
     error: {
@@ -63,9 +63,9 @@ app.use(errorHandler);
 
 // Start server
 app.listen(PORT, () => {
-  console.log(`🚀 Server is running on port ${PORT}`);
-  console.log(`📖 Health check: http://localhost:${PORT}/health`);
-  console.log(`🌍 Environment: ${process.env.NODE_ENV || 'development'}`);
+  // console.log(`🚀 Server is running on port ${PORT}`);
+  // console.log(`📖 Health check: http://localhost:${PORT}/health`);
+  // console.log(`🌍 Environment: ${process.env.NODE_ENV || 'development'}`);
 });
 
 export default app;

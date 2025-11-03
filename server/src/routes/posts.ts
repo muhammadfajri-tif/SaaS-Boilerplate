@@ -10,7 +10,7 @@ import { comments, posts, postTags, tags } from '../utils/schema';
 export const postsRouter = Router();
 
 // GET /api/posts - Get all posts
-postsRouter.get('/', async (req, res) => {
+postsRouter.get('/', async (_, res) => {
   try {
     const allPosts = await db
       .select({
@@ -125,7 +125,7 @@ postsRouter.post('/', async (req, res) => {
     );
   } catch (error) {
     if (error instanceof z.ZodError) {
-      return apiError(res, error?.errors?.[0]!.message, 'VALIDATION_ERROR', 400);
+      return apiError(res, error.message, 'VALIDATION_ERROR', 400);
     }
     console.error('Error creating post:', error);
     return apiError(res, 'Failed to create post', 'CREATE_POST_ERROR', 500);
@@ -278,7 +278,7 @@ postsRouter.put('/:postId', async (req, res) => {
     );
   } catch (error) {
     if (error instanceof z.ZodError) {
-      return apiError(res, error?.errors?.[0]!.message, 'VALIDATION_ERROR', 400);
+      return apiError(res, error.message, 'VALIDATION_ERROR', 400);
     }
     console.error('Error updating post:', error);
     return apiError(res, 'Failed to update post', 'UPDATE_POST_ERROR', 500);
@@ -352,7 +352,7 @@ postsRouter.post('/:postId/comments', async (req, res) => {
     return apiSuccess(res, newComment, 'Comment created successfully', 201);
   } catch (error) {
     if (error instanceof z.ZodError) {
-      return apiError(res, error?.errors?.[0]!.message, 'VALIDATION_ERROR', 400);
+      return apiError(res, error.message, 'VALIDATION_ERROR', 400);
     }
     console.error('Error creating comment:', error);
     return apiError(res, 'Failed to create comment', 'CREATE_COMMENT_ERROR', 500);
