@@ -50,7 +50,7 @@ env:
 
   # Azure Configuration (if using Azure Container Apps)
   AZURE_RESOURCE_GROUP: sandbox-aus
-  AZURE_CONTAINER_APP_NAME: backend
+  AZURE_CONTAINER_APP_NAME: metion-backend
 
 jobs:
   # ===========================================================================

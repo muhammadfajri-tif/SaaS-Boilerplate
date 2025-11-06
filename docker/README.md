@@ -134,13 +134,13 @@ docker-compose -f docker/docker-compose.yml up -d
 **Development (Database + Backend)**:
 
 ```bash
-docker-compose -f docker/docker-compose.dev.yml up -d
+docker-compose -f docker/docker-compose.dev.yml --profile database up -d
 ```
 
 **Production**:
 
 ```bash
-docker-compose -f docker/docker-compose.prod.yml up -d
+docker-compose -f docker/docker-compose.prod.yml --profile database up -d
 ```
 
 ---
@@ -154,6 +154,7 @@ The application supports **two database configurations**:
 Use managed database services like **Neon**, **Supabase**, **PlanetScale**, or **Azure PostgreSQL**.
 
 **Advantages:**
+
 - ✅ No local PostgreSQL container needed
 - ✅ Better performance and reliability
 - ✅ Automatic backups and scaling
@@ -192,6 +193,7 @@ docker-compose -f docker/docker-compose.prod.yml up -d
 Run PostgreSQL in Docker container for local development/testing.
 
 **Advantages:**
+
 - ✅ Works offline
 - ✅ Full control over database
 - ✅ No external dependencies
@@ -318,6 +320,7 @@ Production deployment pulls pre-built images from a container registry (not buil
 3. Production server pulls and runs the image
 
 **Database Options:**
+
 - **Option 1 (Recommended)**: Use external managed database (Neon, Azure PostgreSQL, etc.)
 - **Option 2**: Run PostgreSQL container with `--profile database`
 
@@ -328,6 +331,7 @@ Production deployment pulls pre-built images from a container registry (not buil
 #### Step 1: Setup External Database
 
 Create a production database on:
+
 - [Neon](https://neon.tech) - PostgreSQL serverless (Free tier available)
 - [Supabase](https://supabase.com) - PostgreSQL with additional features
 - [Azure Database for PostgreSQL](https://azure.microsoft.com/en-us/products/postgresql/)
@@ -566,10 +570,10 @@ az postgres flexible-server create \
 
 ```bash
 az containerapp create \
-  --name saas-backend \
-  --resource-group saas-rg \
-  --environment saas-env \
-  --image ghcr.io/yourusername/yourrepo/saas-backend:latest \
+  --name metion-backend \
+  --resource-group sandbox-aus \
+  --environment metion-env \
+  --image ghcr.io/yourusername/backend:latest \
   --target-port 3001 \
   --ingress external \
   --env-vars \
@@ -582,8 +586,8 @@ az containerapp create \
     jwt-secret=your-jwt-secret \
   --cpu 0.5 \
   --memory 1Gi \
-  --min-replicas 1 \
-  --max-replicas 3
+  --min-replicas 0 \
+  --max-replicas 2
 ```
 
 ### Step 6: Configure Custom Domain (with Cloudflare)
