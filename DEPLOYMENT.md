@@ -84,20 +84,40 @@ cd server && npm run dev
 
 **Use Case**: Test complete containerized setup
 
+#### Option A: With External Database (Neon, Supabase)
+
+```bash
+# Setup environment with external database URL
+cp .env.docker.dev .env
+nano .env  # Set DATABASE_URL to your Neon/Supabase URL
+
+# Run migrations
+cd server && npx drizzle-kit migrate && cd ..
+
+# Start backend only
+docker-compose -f docker/docker-compose.dev.yml up -d
+```
+
+**Services**:
+- ✅ Backend: `localhost:3001` (with hot reload)
+- ✅ Database: External (Neon/Supabase)
+- ✅ Drizzle Studio: `localhost:5555` (optional, use `--profile studio`)
+
+#### Option B: With Local PostgreSQL
+
 ```bash
 # Copy environment file
 cp .env.docker.dev .env
 
-# Start all services
-docker-compose -f docker/docker-compose.dev.yml up -d
+# Start all services with database profile
+docker-compose -f docker/docker-compose.dev.yml --profile database up -d
 
 # Test deployment
 ./docker/scripts/test-deployment.sh dev
 ```
 
 **Services**:
-
-- ✅ PostgreSQL: `localhost:5432`
+- ✅ PostgreSQL: `localhost:5432` (local container)
 - ✅ Backend: `localhost:3001` (with hot reload)
 - ✅ Drizzle Studio: `localhost:5555` (optional, use `--profile studio`)
 
@@ -107,25 +127,52 @@ docker-compose -f docker/docker-compose.dev.yml up -d
 
 **Use Case**: Production-ready deployment with registry images
 
+#### Option A: With External Database (Recommended)
+
+```bash
+# Setup environment
+cp .env.docker.prod .env.production
+nano .env.production  # Set DATABASE_URL to your managed database
+
+# Run migrations from host
+cd server
+export DATABASE_URL="postgresql://user:pass@neon-host.com:5432/dbname?sslmode=require"
+npx drizzle-kit migrate
+cd ..
+
+# Pull images and start backend only
+docker-compose -f docker/docker-compose.prod.yml pull
+docker-compose -f docker/docker-compose.prod.yml up -d
+
+# Test deployment
+curl http://localhost:3001/health
+```
+
+**Services**:
+- ✅ Backend: `localhost:3001` (production build)
+- ✅ Database: External managed service (Neon/Azure PostgreSQL/etc.)
+- ✅ NGINX: `localhost:80/443` (optional, use `--profile nginx`)
+
+#### Option B: With Local PostgreSQL
+
 ```bash
 # Setup environment
 cp .env.docker.prod .env.production
 nano .env.production  # Edit with production values
 
-# Pull images and start
+# Pull images and start with database profile
 docker-compose -f docker/docker-compose.prod.yml pull
-docker-compose -f docker/docker-compose.prod.yml up -d
+docker-compose -f docker/docker-compose.prod.yml --profile database up -d
 
 # Run migrations
-docker-compose -f docker/docker-compose.prod.yml --profile migrate up migrate
+docker-compose -f docker/docker-compose.prod.yml --profile database --profile migrate up migrate
 
 # Test deployment
 ./docker/scripts/test-deployment.sh prod
 ```
 
 **Services**:
-
-- ✅ PostgreSQL: `localhost:5432` (with persistent volume)
+- ✅ PostgreSQL: `localhost:5432` (local container with persistent volume)
 - ✅ Backend: `localhost:3001` (production build)
 - ✅ NGINX: `localhost:80/443` (optional, use `--profile nginx`)
 

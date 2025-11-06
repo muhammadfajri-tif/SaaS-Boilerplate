@@ -4,6 +4,22 @@
 # This configuration pulls pre-built images from container registry
 # Suitable for Azure Container Instances, VPS, VM, or self-hosted deployments
 #
+# Database Options:
+#   1. External Database (Neon, Supabase, Azure PostgreSQL, etc.) - DEFAULT
+#      - Set DATABASE_URL in .env.production to your external database
+#      - Start: docker-compose -f docker/docker-compose.prod.yml up -d
+#      - Only starts: backend
+#      - Migrations: Run 'npx drizzle-kit migrate' from host machine
+#
+#   2. Local PostgreSQL (Optional)
+#      - Keep DATABASE_URL pointing to 'postgres' hostname
+#      - Start: docker-compose -f docker/docker-compose.prod.yml --profile database up -d
+#      - Starts: postgres + backend
+#      - Migrations: docker-compose -f docker/docker-compose.prod.yml --profile database --profile migrate up migrate
+#
+# Additional profiles:
+#   --profile nginx     Start NGINX reverse proxy
+#
 # Prerequisites:
 #   1. Build and push backend image to registry (done via GitHub Actions)
 #   2. Set environment variables in .env.production file
@@ -13,15 +29,16 @@
 #   Start: docker-compose -f docker/docker-compose.prod.yml up -d
 #   Stop:  docker-compose -f docker/docker-compose.prod.yml down
 #   Logs:  docker-compose -f docker/docker-compose.prod.yml logs -f backend
-#
-# For Azure Container Apps deployment, use this as reference
 # =============================================================================
 
 version: '3.8'
 
 services:
   # ---------------------------------------------------------------------------
-  # PostgreSQL Database (Production)
+  # PostgreSQL Database (Optional - use --profile database to enable)
+  # ---------------------------------------------------------------------------
+  # By default, this service is NOT started. Use external database like Neon.
+  # To use local PostgreSQL, run with: --profile database
   # ---------------------------------------------------------------------------
   postgres:
     image: postgres:16-alpine
@@ -56,9 +73,15 @@ services:
         reservations:
           cpus: '0.5'
           memory: 512M
+    profiles:
+      - database # Only start when --profile database is used
 
   # ---------------------------------------------------------------------------
-  # Database Migration Runner (One-time job)
+  # Database Migration Runner (For LOCAL database only)
+  # ---------------------------------------------------------------------------
+  # Only use this when running with --profile database (local PostgreSQL)
+  # For external databases (Neon, etc.), run migrations from host:
+  #   cd server && npx drizzle-kit migrate
   # ---------------------------------------------------------------------------
   migrate:
     # Use the same backend image for migrations
@@ -76,10 +99,13 @@ services:
       - metion-network
     restart: no # Run once and exit
     profiles:
-      - migrate # Only run when explicitly requested
+      - database # Requires database profile
+      - migrate # And migrate profile
 
   # ---------------------------------------------------------------------------
   # Express Backend Server (Production - From Registry)
+  # ---------------------------------------------------------------------------
+  # Connects to database via DATABASE_URL (external DB or local postgres)
   # ---------------------------------------------------------------------------
   backend:
     # Pull pre-built image from container registry
@@ -94,7 +120,8 @@ services:
     environment:
       NODE_ENV: production
       PORT: 3001
-      DATABASE_URL: postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}
+      # DATABASE_URL can point to external DB (Neon) or local postgres
+      DATABASE_URL: ${DATABASE_URL:-postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}}
 
       # CORS - Allow Vercel frontend domains
       CORS_ORIGINS: ${CORS_ORIGINS}
@@ -112,9 +139,6 @@ services:
 
     env_file:
       - ../.env.production
-    depends_on:
-      postgres:
-        condition: service_healthy
     networks:
       - metion-network
     healthcheck:

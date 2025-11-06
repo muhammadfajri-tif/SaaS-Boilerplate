@@ -145,44 +145,138 @@ docker-compose -f docker/docker-compose.prod.yml up -d
 
 ---
 
-## 💻 Development Setup
+## 🗄️ Database Options
 
-### Step 1: Start Local Database
+The application supports **two database configurations**:
 
-For fast development, run only PostgreSQL locally:
+### Option 1: External Database (Recommended)
 
-```bash
-# Start PostgreSQL
-docker-compose -f docker/docker-compose.yml up -d
+Use managed database services like **Neon**, **Supabase**, **PlanetScale**, or **Azure PostgreSQL**.
 
-# Verify it's running
-docker ps
+**Advantages:**
+- ✅ No local PostgreSQL container needed
+- ✅ Better performance and reliability
+- ✅ Automatic backups and scaling
+- ✅ Free tier available (Neon, Supabase)
+- ✅ Production-ready
+
+**Setup:**
+
+1. Create database on your provider (e.g., [Neon](https://neon.tech), [Supabase](https://supabase.com))
+2. Copy connection string
+3. Update `.env` file:
+
+```env
+DATABASE_URL=postgresql://user:password@ep-cool-name.us-east-2.aws.neon.tech/dbname
 ```
 
-Your backend and frontend run on your host machine (not in Docker) for faster development.
-
-### Step 2: Full Development Environment
-
-To test the full containerized setup:
+4. Run migrations:
 
 ```bash
-# Start all services (PostgreSQL + Backend + Drizzle Studio)
+cd server
+npx drizzle-kit migrate
+```
+
+5. Start backend:
+
+```bash
+# Development
 docker-compose -f docker/docker-compose.dev.yml up -d
 
-# View logs
+# Production
+docker-compose -f docker/docker-compose.prod.yml up -d
+```
+
+### Option 2: Local PostgreSQL Container
+
+Run PostgreSQL in Docker container for local development/testing.
+
+**Advantages:**
+- ✅ Works offline
+- ✅ Full control over database
+- ✅ No external dependencies
+
+**Setup:**
+
+1. Keep default `DATABASE_URL` in `.env`:
+
+```env
+DATABASE_URL=postgresql://user:password@postgres:5432/saas
+```
+
+2. Start with database profile:
+
+```bash
+# Development
+docker-compose -f docker/docker-compose.dev.yml --profile database up -d
+
+# Production
+docker-compose -f docker/docker-compose.prod.yml --profile database up -d
+```
+
+3. Run migrations:
+
+```bash
+# Development - migrations run automatically with backend startup
+# Or manually:
+docker-compose -f docker/docker-compose.dev.yml --profile database exec backend npx drizzle-kit migrate
+
+# Production
+docker-compose -f docker/docker-compose.prod.yml --profile database --profile migrate up migrate
+```
+
+---
+
+## 💻 Development Setup
+
+### Setup with External Database (Neon, Supabase, etc.)
+
+```bash
+# 1. Set DATABASE_URL to your external database
+echo "DATABASE_URL=postgresql://user:pass@neon-host.com:5432/dbname" > server/.env
+
+# 2. Run migrations
+cd server
+npx drizzle-kit migrate
+cd ..
+
+# 3. Start backend only
+docker-compose -f docker/docker-compose.dev.yml up -d
+
+# 4. View logs
 docker-compose -f docker/docker-compose.dev.yml logs -f backend
 
-# Access services:
+# 5. Access backend
+# - Backend API: http://localhost:3001
+# - Health check: http://localhost:3001/health
+```
+
+### Setup with Local PostgreSQL
+
+```bash
+# 1. Start PostgreSQL + Backend
+docker-compose -f docker/docker-compose.dev.yml --profile database up -d
+
+# 2. Run migrations (if needed)
+docker-compose -f docker/docker-compose.dev.yml --profile database exec backend npx drizzle-kit migrate
+
+# 3. View logs
+docker-compose -f docker/docker-compose.dev.yml logs -f backend
+
+# 4. Access services:
 # - Backend API: http://localhost:3001
 # - Health check: http://localhost:3001/health
 # - PostgreSQL: localhost:5432
 ```
 
-### Step 3: Enable Drizzle Studio (Optional)
+### Enable Drizzle Studio (Optional)
 
 ```bash
-# Start with Drizzle Studio
+# With external database
 docker-compose -f docker/docker-compose.dev.yml --profile studio up -d
+
+# With local PostgreSQL
+docker-compose -f docker/docker-compose.dev.yml --profile database --profile studio up -d
 
 # Access Drizzle Studio: http://localhost:5555
 ```
@@ -223,7 +317,25 @@ Production deployment pulls pre-built images from a container registry (not buil
 2. Image is pushed to container registry (GHCR, ACR, etc.)
 3. Production server pulls and runs the image
 
-### Step 1: Configure Environment Variables
+**Database Options:**
+- **Option 1 (Recommended)**: Use external managed database (Neon, Azure PostgreSQL, etc.)
+- **Option 2**: Run PostgreSQL container with `--profile database`
+
+---
+
+### Deployment with External Database (Recommended)
+
+#### Step 1: Setup External Database
+
+Create a production database on:
+- [Neon](https://neon.tech) - PostgreSQL serverless (Free tier available)
+- [Supabase](https://supabase.com) - PostgreSQL with additional features
+- [Azure Database for PostgreSQL](https://azure.microsoft.com/en-us/products/postgresql/)
+- [AWS RDS PostgreSQL](https://aws.amazon.com/rds/postgresql/)
+
+Copy your connection string (ensure SSL is enabled).
+
+#### Step 2: Configure Environment Variables
 
 Create `.env.production` on your production server:
 
@@ -242,7 +354,70 @@ nano .env.production
 CONTAINER_REGISTRY=ghcr.io/yourusername/yourrepo
 IMAGE_TAG=latest
 
-# Database (CHANGE PASSWORDS!)
+# External Database (Neon, Supabase, etc.)
+DATABASE_URL=postgresql://user:password@ep-cool-name.us-east-2.aws.neon.tech/dbname?sslmode=require
+
+# Backend Configuration
+BACKEND_PORT=3001
+NODE_ENV=production
+
+# CORS & Security
+CORS_ORIGINS=https://yourdomain.com,https://your-vercel-app.vercel.app
+JWT_SECRET=your_64_character_random_string
+API_KEY=your_random_api_key
+
+# Authentication (Clerk)
+CLERK_SECRET_KEY=sk_live_xxxxx
+CLERK_PUBLISHABLE_KEY=pk_live_xxxxx
+
+# Logging
+LOG_LEVEL=info
+```
+
+#### Step 3: Run Database Migrations
+
+```bash
+# Run migrations from host machine
+cd server
+export DATABASE_URL="postgresql://user:pass@neon-host.com:5432/dbname?sslmode=require"
+npx drizzle-kit migrate
+cd ..
+```
+
+#### Step 4: Start Production Services
+
+```bash
+# Pull latest images
+docker-compose -f docker/docker-compose.prod.yml pull
+
+# Start services (backend only, no database container)
+docker-compose -f docker/docker-compose.prod.yml up -d
+
+# Verify health
+curl http://localhost:3001/health
+```
+
+---
+
+### Deployment with Local PostgreSQL Container
+
+#### Step 1: Configure Environment Variables
+
+Create `.env.production`:
+
+```bash
+cp .env.docker.prod .env.production
+nano .env.production
+```
+
+**Update these settings:**
+
+```env
+# Container Registry
+CONTAINER_REGISTRY=ghcr.io/yourusername/yourrepo
+IMAGE_TAG=latest
+
+# Local PostgreSQL (CHANGE PASSWORDS!)
 POSTGRES_USER=prod_admin
 POSTGRES_PASSWORD=your_strong_password_here
 POSTGRES_DB=saas_production
@@ -267,48 +442,49 @@ LOG_LEVEL=info
 
 # Data Storage Path
 DATA_PATH=/var/lib/saas/data/postgres
-
-# NGINX Configuration (Optional - if using --profile nginx)
-NGINX_HTTP_PORT=80
-NGINX_HTTPS_PORT=443
-DOMAIN_NAME=api.yourdomain.com
 ```
 
-### Step 2: Set Up Data Directory
+#### Step 2: Set Up Data Directory
 
 ```bash
 # Create directory for PostgreSQL data
 sudo mkdir -p /var/lib/saas/data/postgres
 sudo chown -R 1001:1001 /var/lib/saas/data/postgres
-
-# Update .env.production
-echo "DATA_PATH=/var/lib/saas/data/postgres" >> .env.production
 ```
 
-### Step 3: Run Database Migrations
-
-```bash
-# Run migrations (one-time setup)
-docker-compose -f docker/docker-compose.prod.yml --profile migrate up migrate
-
-# Check migration logs
-docker-compose -f docker/docker-compose.prod.yml logs migrate
-```
-
-### Step 4: Start Production Services
+#### Step 3: Start Services with Database
 
 ```bash
 # Pull latest images
 docker-compose -f docker/docker-compose.prod.yml pull
 
-# Start services
-docker-compose -f docker/docker-compose.prod.yml up -d
+# Start PostgreSQL + Backend
+docker-compose -f docker/docker-compose.prod.yml --profile database up -d
+```
 
-# Verify health
+#### Step 4: Run Database Migrations
+
+```bash
+# Run migrations using migrate profile
+docker-compose -f docker/docker-compose.prod.yml --profile database --profile migrate up migrate
+
+# Check migration logs
+docker-compose -f docker/docker-compose.prod.yml logs migrate
+```
+
+#### Step 5: Verify Deployment
+
+```bash
+# Check service status
+docker-compose -f docker/docker-compose.prod.yml ps
+
+# Test backend health
 curl http://localhost:3001/health
 ```
 
-### Step 5: Enable NGINX (Optional)
+---
+
+### Enable NGINX (Optional)
 
 If you want NGINX reverse proxy:
 

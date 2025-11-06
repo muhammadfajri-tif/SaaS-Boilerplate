@@ -1,8 +1,22 @@
 # =============================================================================
 # Docker Compose - Development Environment
 # =============================================================================
-# This configuration runs PostgreSQL + Backend Express server for development
+# This configuration runs Backend Express server for development
 # Frontend (Next.js) is NOT included as it runs on Vercel
+#
+# Database Options:
+#   1. External Database (Neon, Supabase, etc.) - DEFAULT
+#      - Set DATABASE_URL in .env to your external database
+#      - Start: docker-compose -f docker/docker-compose.dev.yml up -d
+#      - Only starts: backend
+#
+#   2. Local PostgreSQL (Optional)
+#      - Keep DATABASE_URL pointing to 'postgres' hostname
+#      - Start: docker-compose -f docker/docker-compose.dev.yml --profile database up -d
+#      - Starts: postgres + backend
+#
+# Additional profiles:
+#   --profile studio    Start Drizzle Studio (database UI)
 #
 # Usage:
 #   Start: docker-compose -f docker/docker-compose.dev.yml up -d
@@ -14,7 +28,10 @@ version: '3.8'
 
 services:
   # ---------------------------------------------------------------------------
-  # PostgreSQL Database
+  # PostgreSQL Database (Optional - use --profile database to enable)
+  # ---------------------------------------------------------------------------
+  # By default, this service is NOT started. Use external database like Neon.
+  # To use local PostgreSQL, run with: --profile database
   # ---------------------------------------------------------------------------
   postgres:
     image: postgres:16-alpine
@@ -38,9 +55,13 @@ services:
       retries: 5
       start_period: 10s
     restart: unless-stopped
+    profiles:
+      - database # Only start when --profile database is used
 
   # ---------------------------------------------------------------------------
   # Express Backend Server (Development Mode with Hot Reload)
+  # ---------------------------------------------------------------------------
+  # Connects to database via DATABASE_URL (external DB or local postgres)
   # ---------------------------------------------------------------------------
   backend:
     container_name: saas_backend_dev
@@ -63,20 +84,21 @@ services:
     environment:
       NODE_ENV: development
       PORT: 3001
-      DATABASE_URL: postgresql://${POSTGRES_USER:-user}:${POSTGRES_PASSWORD:-password}@postgres:5432/${POSTGRES_DB:-saas}
+      # DATABASE_URL can point to external DB (Neon) or local postgres
+      DATABASE_URL: ${DATABASE_URL:-postgresql://${POSTGRES_USER:-user}:${POSTGRES_PASSWORD:-password}@postgres:5432/${POSTGRES_DB:-saas}}
       CORS_ORIGINS: ${CORS_ORIGINS:-http://localhost:3000,https://*.vercel.app}
       # Add other environment variables from .env
     env_file:
       - ../server/.env
-    depends_on:
-      postgres:
-        condition: service_healthy
     networks:
       - saas-network
     restart: unless-stopped
 
   # ---------------------------------------------------------------------------
   # Drizzle Studio (Optional - Database Management UI)
+  # ---------------------------------------------------------------------------
+  # Use --profile studio to enable
+  # Works with both external DB and local PostgreSQL
   # ---------------------------------------------------------------------------
   drizzle-studio:
     container_name: saas_drizzle_studio_dev
@@ -89,15 +111,13 @@ services:
     ports:
       - '${DRIZZLE_STUDIO_PORT:-5555}:5555'
     environment:
-      DATABASE_URL: postgresql://${POSTGRES_USER:-user}:${POSTGRES_PASSWORD:-password}@postgres:5432/${POSTGRES_DB:-saas}
-    depends_on:
-      postgres:
-        condition: service_healthy
+      # Uses DATABASE_URL from .env (can be external DB or local postgres)
+      DATABASE_URL: ${DATABASE_URL:-postgresql://${POSTGRES_USER:-user}:${POSTGRES_PASSWORD:-password}@postgres:5432/${POSTGRES_DB:-saas}}
     networks:
       - saas-network
     restart: unless-stopped
     profiles:
-      - studio # Only start when explicitly requested
+      - studio # Only start when explicitly requested with --profile studio
 
 # =============================================================================
 # Networks
