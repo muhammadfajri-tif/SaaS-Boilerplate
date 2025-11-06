@@ -1,3 +1,10 @@
+## [1.0.1](https://github.com/RioAgasta/SaaS-Boilerplate/compare/v1.0.0...v1.0.1) (2025-11-06)
+
+
+### Bug Fixes
+
+* set API URL via ENV ([4f24262](https://github.com/RioAgasta/SaaS-Boilerplate/commit/4f242623052075615411cbd74afcd39969e68ec7))
+
 # 1.0.0 (2025-11-06)
 
 
