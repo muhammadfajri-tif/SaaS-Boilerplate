@@ -52,7 +52,7 @@ async function seed() {
     const seededPosts = await db.insert(posts).values(
       dummyPosts.map(post => ({
         id: post.id,
-        userId: userMap.get(post.userId) || post.userId,
+        userId: post.userId,
         title: post.title,
         content: post.content,
       })),
@@ -81,7 +81,7 @@ async function seed() {
       dummyComments.map(comment => ({
         id: comment.id,
         postId: comment.postId,
-        userId: userMap.get(comment.userId) || comment.userId,
+        userId: comment.userId,
         content: comment.content,
       })),
     ).returning();
