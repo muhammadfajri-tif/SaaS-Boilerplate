@@ -2,7 +2,6 @@ import { getTranslations } from 'next-intl/server';
 
 import { BlogSection } from '@/templates/BlogSection';
 import { CTA } from '@/templates/CTA';
-import { DemoBanner } from '@/templates/DemoBanner';
 import { FAQ } from '@/templates/FAQ';
 import { Features } from '@/templates/Features';
 import { Footer } from '@/templates/Footer';
@@ -29,7 +28,6 @@ const IndexPage = async () => {
   redirect('/blogs');
   return (
     <>
-      <DemoBanner />
       <Navbar />
       <Hero />
       <Sponsors />
