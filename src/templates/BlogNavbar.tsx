@@ -46,7 +46,7 @@ export const BlogNavbar = () => {
     <div
       className={`fixed left-0 right-0 top-0 z-50 transition-transform duration-300 ${
         isVisible ? 'translate-y-0' : '-translate-y-full'
-      } bg-white/95 backdrop-blur-sm dark:bg-gray-950/95`}
+      } bg-white/80 backdrop-blur-xs dark:bg-gray-950/95 shadow-sm`}
     >
       <Section className="px-3 py-6">
         <CenteredMenu
