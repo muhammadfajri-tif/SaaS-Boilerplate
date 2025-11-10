@@ -134,7 +134,7 @@ export const WritePostPage = () => {
   return (
     <>
       <BlogNavbar />
-      <div className="min-h-screen bg-white dark:bg-gray-950">
+      <div className="min-h-screen bg-white pt-20 dark:bg-gray-950">
         {/* Medium-style Header */}
         <div className="border-b border-gray-200 dark:border-gray-800">
           <div className="mx-auto flex max-w-5xl items-center justify-between px-6 py-4">

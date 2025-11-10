@@ -159,7 +159,7 @@ export const FYPPostsPage = () => {
   return (
     <>
       <BlogNavbar />
-      <div className="min-h-screen bg-white dark:bg-gray-950">
+      <div className="min-h-screen bg-white pt-24 dark:bg-gray-950">
         {/* Simple Header */}
         <div className="border-b border-gray-200 dark:border-gray-800">
           <Section className="py-8">

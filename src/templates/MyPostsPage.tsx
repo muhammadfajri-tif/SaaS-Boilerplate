@@ -66,7 +66,7 @@ export const MyPostsPage = () => {
   return (
     <>
       <BlogNavbar />
-      <div className="min-h-screen bg-white dark:bg-gray-950">
+      <div className="min-h-screen bg-white pt-24 dark:bg-gray-950">
         <Section className="py-12">
           <div className="mx-auto max-w-4xl">
             {/* Header */}

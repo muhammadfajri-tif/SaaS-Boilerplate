@@ -1,7 +1,7 @@
 {
   "Index": {
-    "meta_title": "SaaS Template - Template SaaS sempurna untuk membangun dan mengembangkan bisnis Anda dengan mudah.",
-    "meta_description": "Template halaman arahan gratis dan open-source untuk bisnis SaaS Anda, dibuat dengan React, TypeScript, Shadcn UI, dan Tailwind CSS."
+    "meta_title": "Metion - Platform Blog Modern untuk Penulis Kreatif",
+    "meta_description": "Platform blog yang indah dan powerful dibangun dengan React, TypeScript, dan Tailwind CSS. Tulis, terbitkan, dan bagikan cerita Anda ke seluruh dunia."
   },
   "Navbar": {
     "sign_in": "Masuk",
@@ -13,19 +13,19 @@
     "company": "Perusahaan"
   },
   "Hero": {
-    "follow_twitter": "Ikuti @Ixartz di Twitter",
-    "title": "Template <important>SaaS sempurna</important> untuk membangun dan mengembangkan bisnis Anda dengan mudah.",
-    "description": "Template halaman arahan gratis dan open-source untuk bisnis SaaS Anda, dibuat dengan React, TypeScript, Shadcn UI, dan Tailwind CSS.",
-    "primary_button": "Mulai Sekarang",
-    "secondary_button": "Beri Bintang di GitHub"
+    "follow_twitter": "Ikuti @Metion di Twitter",
+    "title": "Tulis, Bagikan, <important>Inspirasi</important> dengan Metion",
+    "description": "Platform blog modern yang dirancang untuk penulis yang ingin berbagi cerita mereka dengan editor bergaya Medium dan fitur-fitur powerful.",
+    "primary_button": "Mulai Menulis",
+    "secondary_button": "Jelajahi Cerita"
   },
   "Sponsors": {
     "title": "Disponsori oleh"
   },
   "Features": {
     "section_subtitle": "Fitur",
-    "section_title": "Buka Potensi Penuh dari Template SaaS",
-    "section_description": "Template halaman arahan gratis dan open-source untuk bisnis SaaS Anda, dibuat dengan React, TypeScript, Shadcn UI, dan Tailwind CSS.",
+    "section_title": "Semua yang Anda Butuhkan untuk Bercerita",
+    "section_description": "Metion menyediakan semua tools yang Anda butuhkan untuk membuat konten yang indah dan menarik dengan platform blog modern kami.",
     "feature1_title": "Node.js",
     "feature2_title": "React",
     "feature3_title": "Tailwind CSS",
@@ -185,11 +185,11 @@
     "article4_date": "8 Oktober 2025"
   },
   "FYPPosts": {
-    "meta_title": "Arisu.Blog - Jelajahi Artikel & Wawasan",
-    "meta_description": "Temukan artikel menarik tentang teknologi, pemrograman, desain, dan lainnya di Arisu.Blog.",
+    "meta_title": "Metion - Temukan Cerita Menakjubkan",
+    "meta_description": "Jelajahi cerita inspiratif, artikel, dan wawasan dari penulis kreatif di seluruh dunia di Metion.",
     "section_subtitle": "Selamat datang di",
-    "section_title": "Arisu.Blog",
-    "section_description": "Tempat terbaik untuk artikel-artikel inspiratif tentang teknologi, pemrograman, dan ide kreatif.",
+    "section_title": "Metion",
+    "section_description": "Temukan cerita inspiratif dan artikel dari penulis berbakat di seluruh dunia.",
     "showing_results": "Ditemukan {count} artikel",
     "no_results_title": "Artikel tidak ditemukan",
     "no_results_description": "Coba kata kunci lain atau jelajahi topik berbeda."

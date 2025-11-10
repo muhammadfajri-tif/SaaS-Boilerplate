@@ -1,7 +1,7 @@
 {
   "Index": {
-    "meta_title": "SaaSテンプレート - ビジネスを簡単に構築・拡大できる完璧なSaaSテンプレート",
-    "meta_description": "React、TypeScript、Shadcn UI、Tailwind CSSで構築された、SaaSビジネス向けの無料オープンソースランディングページテンプレート。"
+    "meta_title": "Metion - クリエイティブライター向けモダンブログプラットフォーム",
+    "meta_description": "React、TypeScript、Tailwind CSSで構築された美しく強力なブログプラットフォーム。あなたのストーリーを書き、公開し、世界と共有しましょう。"
   },
   "Navbar": {
     "sign_in": "サインイン",
@@ -13,19 +13,19 @@
     "company": "会社"
   },
   "Hero": {
-    "follow_twitter": "TwitterでIxartzをフォロー",
-    "title": "ビジネスを簡単に構築・拡大できる完璧な<important>SaaSテンプレート</important>",
-    "description": "React、TypeScript、Shadcn UI、Tailwind CSSで構築された、SaaSビジネス向けの無料オープンソースランディングページテンプレート。",
-    "primary_button": "始める",
-    "secondary_button": "GitHubでスター"
+    "follow_twitter": "@MetionをTwitterでフォロー",
+    "title": "Metionで書き、共有し、<important>インスパイア</important>",
+    "description": "Mediumスタイルのエディターと強力な機能で、ストーリーを共有したいライターのために設計されたモダンなブログプラットフォーム。",
+    "primary_button": "書き始める",
+    "secondary_button": "ストーリーを探索"
   },
   "Sponsors": {
     "title": "スポンサー"
   },
   "Features": {
     "section_subtitle": "機能",
-    "section_title": "SaaSテンプレートの全機能を解放",
-    "section_description": "React、TypeScript、Shadcn UI、Tailwind CSSで構築された、SaaSビジネス向けの無料オープンソースランディングページテンプレート。",
+    "section_title": "ストーリーを語るために必要なすべて",
+    "section_description": "Metionは、モダンなブログプラットフォームで美しく魅力的なコンテンツを作成するために必要なすべてのツールを提供します。",
     "feature1_title": "Node.js",
     "feature2_title": "React",
     "feature3_title": "Tailwind CSS",
@@ -185,11 +185,11 @@
     "article4_date": "2025年10月8日"
   },
   "FYPPosts": {
-    "meta_title": "Arisu.Blog - 記事とインサイトを探索",
-    "meta_description": "Arisu.Blogでテクノロジー、プログラミング、デザインなどに関する興味深い記事を見つけましょう。",
+    "meta_title": "Metion - 素晴らしいストーリーを発見",
+    "meta_description": "Metionで世界中のクリエイティブなライターからのインスピレーション溢れるストーリー、記事、洞察を探索しましょう。",
     "section_subtitle": "ようこそ",
-    "section_title": "Arisu.Blog",
-    "section_description": "テクノロジー、プログラミング、クリエイティブなアイデアに関する洞察力のある記事をお届けします。",
+    "section_title": "Metion",
+    "section_description": "世界中の才能あるライターからのインスピレーション溢れるストーリーと記事を発見。",
     "showing_results": "{count}件の記事が見つかりました",
     "no_results_title": "記事が見つかりません",
     "no_results_description": "他のキーワードを試すか、別のトピックを探索してください。"

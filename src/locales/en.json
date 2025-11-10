@@ -1,7 +1,7 @@
 {
   "Index": {
-    "meta_title": "SaaS Template - The perfect SaaS template to build and scale your business with ease.",
-    "meta_description": "A free and open-source landing page template for your SaaS business, built with React, TypeScript, Shadcn UI, and Tailwind CSS."
+    "meta_title": "Metion - Modern Blogging Platform for Creative Writers",
+    "meta_description": "A beautiful and powerful blogging platform built with React, TypeScript, and Tailwind CSS. Write, publish, and share your stories with the world."
   },
   "Navbar": {
     "sign_in": "Sign In",
@@ -13,19 +13,19 @@
     "company": "Company"
   },
   "Hero": {
-    "follow_twitter": "Follow @Ixartz on Twitter",
-    "title": "The perfect <important>SaaS template</important> to build and scale your business with ease.",
-    "description": "A free and open-source landing page template for your SaaS business, built with React, TypeScript, Shadcn UI, and Tailwind CSS.",
-    "primary_button": "Get Started",
-    "secondary_button": "Star on GitHub"
+    "follow_twitter": "Follow @Metion on Twitter",
+    "title": "Write, Share, <important>Inspire</important> with Metion",
+    "description": "A modern blogging platform designed for writers who want to share their stories with beautiful Medium-style editor and powerful features.",
+    "primary_button": "Start Writing",
+    "secondary_button": "Explore Stories"
   },
   "Sponsors": {
     "title": "Sponsored by"
   },
   "Features": {
     "section_subtitle": "Features",
-    "section_title": "Unlock the Full Potential of the SaaS Template",
-    "section_description": "A free and open-source landing page template for your SaaS business, built with React, TypeScript, Shadcn UI, and Tailwind CSS.",
+    "section_title": "Everything You Need to Tell Your Story",
+    "section_description": "Metion provides all the tools you need to create beautiful, engaging content with our modern blogging platform.",
     "feature1_title": "Node.js",
     "feature2_title": "React",
     "feature3_title": "Tailwind CSS",
@@ -185,11 +185,11 @@
     "article4_date": "October 8, 2025"
   },
   "FYPPosts": {
-    "meta_title": "Arisu.Blog - Explore Articles & Insights",
-    "meta_description": "Discover interesting articles about technology, programming, design, and more on Arisu.Blog.",
+    "meta_title": "Metion - Discover Amazing Stories",
+    "meta_description": "Explore inspiring stories, articles, and insights from creative writers around the world on Metion.",
     "section_subtitle": "Welcome to",
-    "section_title": "Arisu.Blog",
-    "section_description": "Your go-to place for insightful articles on tech, programming, and creative ideas.",
+    "section_title": "Metion",
+    "section_description": "Discover inspiring stories and articles from talented writers worldwide.",
     "showing_results": "Found {count} article(s)",
     "no_results_title": "No articles found",
     "no_results_description": "Try different keywords or explore other topics."

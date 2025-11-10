@@ -1,7 +1,7 @@
 {
   "Index": {
-    "meta_title": "SaaS Template - Le template SaaS parfait pour construire et mettre à l'échelle votre entreprise en toute simplicité.",
-    "meta_description": "Un template gratuit et open-source de landing page pour votre entreprise SaaS, construit avec React, TypeScript, Shadcn UI et Tailwind CSS."
+    "meta_title": "Metion - Plateforme de Blogging Moderne pour Écrivains Créatifs",
+    "meta_description": "Une plateforme de blogging belle et puissante construite avec React, TypeScript et Tailwind CSS. Écrivez, publiez et partagez vos histoires avec le monde."
   },
   "Navbar": {
     "sign_in": "Se connecter",
@@ -13,19 +13,19 @@
     "company": "Entreprise"
   },
   "Hero": {
-    "follow_twitter": "Suivez @Ixartz sur Twitter",
-    "title": "Le parfait <important>SaaS template</important> pour construire et mettre à l'échelle votre entreprise en toute simplicité.",
-    "description": "Un template gratuit et open-source de landing page pour votre entreprise SaaS, construit avec React, TypeScript, Shadcn UI et Tailwind CSS.",
-    "primary_button": "Démarrer",
-    "secondary_button": "Mettez une étoile sur GitHub"
+    "follow_twitter": "Suivez @Metion sur Twitter",
+    "title": "Écrivez, Partagez, <important>Inspirez</important> avec Metion",
+    "description": "Une plateforme de blogging moderne conçue pour les écrivains qui veulent partager leurs histoires avec un éditeur style Medium et des fonctionnalités puissantes.",
+    "primary_button": "Commencer à Écrire",
+    "secondary_button": "Explorer les Histoires"
   },
   "Sponsors": {
     "title": "Sponsorisé par"
   },
   "Features": {
     "section_subtitle": "Fonctionnalités",
-    "section_title": "Débloquer le plein potentiel du SaaS Template",
-    "section_description": "Un template gratuit et open-source de landing page pour votre entreprise SaaS, construit avec React, TypeScript, Shadcn UI et Tailwind CSS.",
+    "section_title": "Tout ce Dont Vous Avez Besoin pour Raconter Votre Histoire",
+    "section_description": "Metion fournit tous les outils dont vous avez besoin pour créer du contenu magnifique et engageant avec notre plateforme de blogging moderne.",
     "feature1_title": "Node.js",
     "feature2_title": "React",
     "feature3_title": "Tailwind CSS",
@@ -185,11 +185,11 @@
     "article4_date": "8 octobre 2025"
   },
   "FYPPosts": {
-    "meta_title": "Arisu.Blog - Explorez Articles & Idées",
-    "meta_description": "Découvrez des articles intéressants sur la technologie, la programmation, le design et plus encore sur Arisu.Blog.",
+    "meta_title": "Metion - Découvrez des Histoires Incroyables",
+    "meta_description": "Explorez des histoires inspirantes, articles et idées d'écrivains créatifs du monde entier sur Metion.",
     "section_subtitle": "Bienvenue sur",
-    "section_title": "Arisu.Blog",
-    "section_description": "Votre destination pour des articles inspirants sur la tech, la programmation et les idées créatives.",
+    "section_title": "Metion",
+    "section_description": "Découvrez des histoires inspirantes et des articles d'écrivains talentueux du monde entier.",
     "showing_results": "Trouvé {count} article(s)",
     "no_results_title": "Aucun article trouvé",
     "no_results_description": "Essayez d'autres mots-clés ou explorez différents sujets."

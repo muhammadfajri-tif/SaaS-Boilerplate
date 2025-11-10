@@ -52,7 +52,7 @@ export default function BlogPostDetailPage() {
     return (
       <>
         <BlogNavbar />
-        <div className="min-h-screen bg-white dark:bg-gray-950">
+        <div className="min-h-screen bg-white pt-20 dark:bg-gray-950">
           {/* Back Button */}
           <div className="border-b border-gray-200 dark:border-gray-800">
             <Section className="py-4">
@@ -79,7 +79,7 @@ export default function BlogPostDetailPage() {
     return (
       <>
         <BlogNavbar />
-        <div className="min-h-screen bg-white dark:bg-gray-950">
+        <div className="min-h-screen bg-white pt-20 dark:bg-gray-950">
           <Section className="py-12">
             <div className="text-center">
               <h1 className="mb-4 text-4xl font-bold text-gray-900 dark:text-white">
@@ -153,7 +153,7 @@ export default function BlogPostDetailPage() {
   return (
     <>
       <BlogNavbar />
-      <div className="min-h-screen bg-white dark:bg-gray-950">
+      <div className="min-h-screen bg-white pt-20 dark:bg-gray-950">
         {/* Back Button */}
         <div className="border-b border-gray-200 dark:border-gray-800">
           <Section className="py-4">
