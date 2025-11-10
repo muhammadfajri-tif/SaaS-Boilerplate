@@ -171,7 +171,7 @@ export default function BlogPostDetailPage() {
         <Section className="py-12">
           <div className="mx-auto grid max-w-7xl gap-12 lg:grid-cols-12">
             {/* Main Content */}
-            <article className="lg:col-span-8">
+            <article className="lg:col-span-9">
               {/* Tags */}
               {post.tags.length > 0 && (
                 <div className="mb-6 flex flex-wrap gap-2">
@@ -284,27 +284,27 @@ export default function BlogPostDetailPage() {
             </article>
 
             {/* Sidebar */}
-            <aside className="lg:col-span-4">
-              <div className="sticky top-8 space-y-6">
+            <aside className="lg:col-span-3">
+              <div className="sticky top-8 space-y-4">
                 {/* Author Card */}
-                <div className="rounded-lg border border-gray-200 bg-gray-50 p-6 dark:border-gray-800 dark:bg-gray-900">
-                  <div className="mb-4 flex items-center gap-3">
-                    <User className="size-5 text-gray-600 dark:text-gray-400" />
-                    <h3 className="font-semibold text-gray-900 dark:text-white">
+                <div className="rounded-lg border border-gray-200 bg-gray-50 p-4 dark:border-gray-800 dark:bg-gray-900">
+                  <div className="mb-3 flex items-center gap-2">
+                    <User className="size-4 text-gray-600 dark:text-gray-400" />
+                    <h3 className="text-sm font-semibold text-gray-900 dark:text-white">
                       About the Author
                     </h3>
                   </div>
-                  <div className="mb-4 flex items-center gap-3">
-                    <div className="flex size-12 items-center justify-center rounded-full bg-gray-900 text-lg font-bold text-white dark:bg-white dark:text-gray-900">
+                  <div className="flex items-center gap-3">
+                    <div className="flex size-10 items-center justify-center rounded-full bg-gray-900 text-sm font-bold text-white dark:bg-white dark:text-gray-900">
                       {post.userId.charAt(0).toUpperCase()}
                     </div>
                     <div>
-                      <p className="font-semibold text-gray-900 dark:text-white">
+                      <p className="text-sm font-semibold text-gray-900 dark:text-white">
                         {author
                           ? `${author.first_name} ${author.last_name}`
                           : post.userId}
                       </p>
-                      <p className="text-sm text-gray-600 dark:text-gray-400">
+                      <p className="text-xs text-gray-600 dark:text-gray-400">
                         @
                         {post.userId}
                       </p>
@@ -313,49 +313,53 @@ export default function BlogPostDetailPage() {
                 </div>
 
                 {/* Share Buttons */}
-                <div className="rounded-lg border border-gray-200 bg-gray-50 p-6 dark:border-gray-800 dark:bg-gray-900">
-                  <h3 className="mb-4 font-semibold text-gray-900 dark:text-white">
+                <div className="rounded-lg border border-gray-200 bg-gray-50 p-4 dark:border-gray-800 dark:bg-gray-900">
+                  <h3 className="mb-3 text-sm font-semibold text-gray-900 dark:text-white">
                     Share Article
                   </h3>
                   <div className="space-y-2">
                     <Button
                       onClick={shareToTwitter}
                       variant="outline"
-                      className="w-full justify-start"
+                      size="sm"
+                      className="w-full justify-start text-xs"
                     >
-                      <Twitter className="mr-2 size-4" />
+                      <Twitter className="mr-2 size-3.5" />
                       Share on Twitter
                     </Button>
                     <Button
                       onClick={shareToFacebook}
                       variant="outline"
-                      className="w-full justify-start"
+                      size="sm"
+                      className="w-full justify-start text-xs"
                     >
-                      <Facebook className="mr-2 size-4" />
+                      <Facebook className="mr-2 size-3.5" />
                       Share on Facebook
                     </Button>
                     <Button
                       onClick={shareToLinkedIn}
                       variant="outline"
-                      className="w-full justify-start"
+                      size="sm"
+                      className="w-full justify-start text-xs"
                     >
-                      <Linkedin className="mr-2 size-4" />
+                      <Linkedin className="mr-2 size-3.5" />
                       Share on LinkedIn
                     </Button>
                     <Button
                       onClick={copyLink}
                       variant="outline"
-                      className="w-full justify-start"
+                      size="sm"
+                      className="w-full justify-start text-xs"
                     >
-                      <Link2 className="mr-2 size-4" />
+                      <Link2 className="mr-2 size-3.5" />
                       Copy Link
                     </Button>
                   </div>
                 </div>
 
                 {/* Export PDF Button */}
-                <div className="rounded-lg border border-gray-200 bg-gray-50 p-6 dark:border-gray-800 dark:bg-gray-900">
-                  <h3 className="mb-4 font-semibold text-gray-900 dark:text-white">
+                <div className="rounded-lg border border-gray-200 bg-gray-50 p-4 dark:border-gray-800 dark:bg-gray-900">
+                  <h3 className="mb-3 text-sm font-semibold text-gray-900 dark:text-white">
                     Save Article
                   </h3>
                   <ExportPDFButton
@@ -369,11 +373,11 @@ export default function BlogPostDetailPage() {
                 </div>
 
                 {/* Post Stats */}
-                <div className="rounded-lg border border-gray-200 bg-gray-50 p-6 dark:border-gray-800 dark:bg-gray-900">
-                  <h3 className="mb-4 font-semibold text-gray-900 dark:text-white">
+                <div className="rounded-lg border border-gray-200 bg-gray-50 p-4 dark:border-gray-800 dark:bg-gray-900">
+                  <h3 className="mb-3 text-sm font-semibold text-gray-900 dark:text-white">
                     Post Statistics
                   </h3>
-                  <div className="space-y-3 text-sm">
+                  <div className="space-y-2 text-xs">
                     <div className="flex justify-between">
                       <span className="text-gray-600 dark:text-gray-400">Comments</span>
                       <span className="font-medium text-gray-900 dark:text-white">
