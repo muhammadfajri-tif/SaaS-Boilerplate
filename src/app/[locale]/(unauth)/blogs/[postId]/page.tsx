@@ -180,7 +180,7 @@ export default function BlogPostDetailPage() {
                       key={tag.id}
                       className="rounded-full bg-gray-100 px-4 py-1.5 text-sm font-medium text-gray-700 dark:bg-gray-800 dark:text-gray-300"
                     >
-                      {tag.name}
+                      {tag.name.toLowerCase()}
                     </span>
                   ))}
                 </div>

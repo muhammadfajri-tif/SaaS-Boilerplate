@@ -95,9 +95,9 @@ export const FYPPostsPage = () => {
     // Filter by selected tags (AND logic - post must have ALL selected tags)
     if (selectedTags.length > 0) {
       filtered = filtered.filter((post) => {
-        const postTagNames = post.tags.map(tag => tag.name.toUpperCase());
+        const postTagNames = post.tags.map(tag => tag.name.toLowerCase());
         return selectedTags.every(selectedTag =>
-          postTagNames.includes(selectedTag),
+          postTagNames.includes(selectedTag.toLowerCase()),
         );
       });
     }

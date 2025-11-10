@@ -5,6 +5,7 @@ import type { Post } from '@/types/Post';
 import { Edit, MessageCircle, Trash2 } from 'lucide-react';
 import Link from 'next/link';
 import { useState } from 'react';
+import ReactMarkdown from 'react-markdown';
 
 import { Button } from '@/components/ui/button';
 
@@ -66,7 +67,7 @@ export function PostCard({
                 key={tag.id}
                 className="rounded-full bg-gray-100 px-3 py-1 text-xs font-medium text-gray-700 dark:bg-gray-800 dark:text-gray-300"
               >
-                {tag.name}
+                {tag.name.toLowerCase()}
               </span>
             ))}
           </div>
@@ -77,10 +78,21 @@ export function PostCard({
           {post.title}
         </h3>
 
-        {/* Content Preview */}
-        <p className="mb-4 line-clamp-2 text-base text-gray-600 dark:text-gray-400">
-          {post.content}
-        </p>
+        {/* Content Preview with Markdown */}
+        <div className="mb-4 line-clamp-2 text-base text-gray-600 dark:text-gray-400">
+          <ReactMarkdown
+            components={{
+              h1: ({ children }) => <span className="font-bold text-lg">{children}</span>,
+              h2: ({ children }) => <span className="font-bold text-base">{children}</span>,
+              h3: ({ children }) => <span className="font-semibold">{children}</span>,
+              strong: ({ children }) => <strong className="font-bold">{children}</strong>,
+              em: ({ children }) => <em className="italic">{children}</em>,
+              p: ({ children }) => <span>{children}</span>,
+            }}
+          >
+            {post.content}
+          </ReactMarkdown>
+        </div>
 
         {/* Footer with Author and Comments */}
         <div className="flex items-center justify-between">

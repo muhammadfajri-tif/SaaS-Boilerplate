@@ -29,10 +29,10 @@ export const SearchFilter = ({
   const handleTagInputKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter' && tagInput.trim()) {
       e.preventDefault();
-      const capitalizedTag = tagInput.trim().toUpperCase();
+      const lowercaseTag = tagInput.trim().toLowerCase();
 
-      if (!selectedTags.includes(capitalizedTag)) {
-        onTagsChange([...selectedTags, capitalizedTag]);
+      if (!selectedTags.includes(lowercaseTag)) {
+        onTagsChange([...selectedTags, lowercaseTag]);
       }
       setTagInput('');
     }
@@ -43,9 +43,9 @@ export const SearchFilter = ({
   };
 
   const addPredefinedTag = (tag: string) => {
-    const upperTag = tag.toUpperCase();
-    if (!selectedTags.includes(upperTag)) {
-      onTagsChange([...selectedTags, upperTag]);
+    const lowerTag = tag.toLowerCase();
+    if (!selectedTags.includes(lowerTag)) {
+      onTagsChange([...selectedTags, lowerTag]);
     }
   };
 
@@ -120,8 +120,8 @@ export const SearchFilter = ({
           </p>
           <div className="flex flex-wrap gap-2">
             {availableTags.map((tag) => {
-              const upperTag = tag.toUpperCase();
-              const isSelected = selectedTags.includes(upperTag);
+              const lowerTag = tag.toLowerCase();
+              const isSelected = selectedTags.includes(lowerTag);
               return (
                 <button
                   type="button"
@@ -130,7 +130,7 @@ export const SearchFilter = ({
                   disabled={isSelected}
                   className="rounded-full border border-gray-300 bg-white px-3 py-1.5 text-xs font-medium text-gray-700 transition-colors hover:border-gray-900 hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-500 dark:hover:bg-gray-800"
                 >
-                  {upperTag}
+                  {lowerTag}
                 </button>
               );
             })}
