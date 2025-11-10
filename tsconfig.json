@@ -58,7 +58,8 @@
     "./node_modules/**/*",
     "**/*.spec.ts",
     "**/*.e2e.ts",
-    "./src/components/ui/**"
+    "./src/components/ui/**",
+    "./server/**/*"
   ],
   "include": [
     "next-env.d.ts",

@@ -24,7 +24,9 @@ export async function generateMetadata(props: { params: Promise<{ locale: string
   };
 }
 
-const IndexPage = () => {
+const IndexPage = async () => {
+  const { redirect } = await import('next/navigation');
+  redirect('/blogs');
   return (
     <>
       <DemoBanner />

@@ -19,7 +19,7 @@ export const Logo = (props: {
           strokeLinecap="round"
           strokeLinejoin="round"
         />
-        
+
         {/* Pen nib detail */}
         <path
           d="M 14 16 L 16 28 L 18 16"
@@ -29,7 +29,7 @@ export const Logo = (props: {
           strokeLinejoin="round"
           fill="none"
         />
-        
+
         {/* Center line detail */}
         <line
           x1="16"
@@ -40,7 +40,7 @@ export const Logo = (props: {
           strokeWidth="1.2"
           strokeLinecap="round"
         />
-        
+
         {/* Ink dot at bottom */}
         <circle
           cx="16"
@@ -57,6 +57,3 @@ export const Logo = (props: {
     )}
   </div>
 );
-
-
-
