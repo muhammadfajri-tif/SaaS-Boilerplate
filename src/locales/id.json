@@ -89,6 +89,7 @@
   "DashboardLayout": {
     "home": "Beranda",
     "todos": "Daftar Tugas",
+    "blogs": "Blog",
     "members": "Anggota",
     "billing": "Tagihan",
     "settings": "Pengaturan"

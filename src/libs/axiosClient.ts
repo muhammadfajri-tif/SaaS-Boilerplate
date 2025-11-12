@@ -7,17 +7,12 @@ const axiosClient = axios.create({
   headers: {
     'Content-Type': 'application/json',
   },
+  withCredentials: true,
 });
 
 // Request interceptor to add user authentication
 axiosClient.interceptors.request.use(
-  (config) => {
-    // Add user ID header if available (you can replace this with proper JWT token handling)
-    const userId = localStorage.getItem('userId');
-    if (userId) {
-      config.headers['x-user-id'] = userId;
-    }
-
+  async (config) => {
     return config;
   },
   (error) => {
@@ -43,12 +38,15 @@ axiosClient.interceptors.response.use(
       // Extract error message from API response
       const errorMessage = data?.error?.message || data?.message || 'An error occurred';
 
+      if (status === 401) {
+        toast.error('Unauthorized: Please check your credentials');
+        window.location.href = '/sign-in';
+        return Promise.reject(error);
+      }
+
       switch (status) {
         case 400:
           toast.error(`Bad Request: ${errorMessage}`);
-          break;
-        case 401:
-          toast.error('Unauthorized: Please check your credentials');
           break;
         case 403:
           toast.error('Forbidden: You don\'t have permission to perform this action');

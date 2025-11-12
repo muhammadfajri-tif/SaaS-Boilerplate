@@ -1,3 +1,4 @@
+import { clerkClient, getAuth } from '@clerk/express';
 import { eq, sql } from 'drizzle-orm';
 import { Router } from 'express';
 import { z } from 'zod';
@@ -12,6 +13,8 @@ export const postsRouter = Router();
 // GET /api/posts - Get all posts
 postsRouter.get('/', async (_, res) => {
   try {
+    const { data: users } = await clerkClient.users.getUserList();
+
     const allPosts = await db
       .select({
         id: posts.id,
@@ -44,10 +47,13 @@ postsRouter.get('/', async (_, res) => {
           .where(eq(comments.postId, post.id))
           .orderBy(sql`${comments.createdAt} ASC`);
 
+        const author = users.find(user => post.userId === user.id);
+
         return {
           ...post,
           tags: postTagsData,
           comments: postComments,
+          user: author ? `${author.firstName} ${author.lastName}` : post.userId,
         };
       }),
     );
@@ -62,12 +68,10 @@ postsRouter.get('/', async (_, res) => {
 // POST /api/posts - Create new post
 postsRouter.post('/', async (req, res) => {
   try {
-    // For now, we'll extract userId from request body or headers
-    // In a real app, this would come from JWT token or session
-    const userId = req.headers['x-user-id'] as string || req.body.userId;
+    const { userId, isAuthenticated } = getAuth(req);
 
-    if (!userId) {
-      return apiError(res, 'Unauthorized - User ID required', 'UNAUTHORIZED', 401);
+    if (!userId || !isAuthenticated) {
+      return apiError(res, 'Unauthorized - Authentication required', 'UNAUTHORIZED', 401);
     }
 
     const validatedData = createPostSchema.parse(req.body);
@@ -178,12 +182,12 @@ postsRouter.get('/:postId', async (req, res) => {
 // PUT /api/posts/:postId - Update post
 postsRouter.put('/:postId', async (req, res) => {
   try {
-    const { postId } = req.params;
-    const userId = req.headers['x-user-id'] as string || req.body.userId;
+    const { userId, isAuthenticated } = getAuth(req);
 
-    if (!userId) {
-      return apiError(res, 'Unauthorized - User ID required', 'UNAUTHORIZED', 401);
+    if (!userId || !isAuthenticated) {
+      return apiError(res, 'Unauthorized - Authentication required', 'UNAUTHORIZED', 401);
     }
+    const { postId } = req.params;
 
     const validatedData = updatePostSchema.parse(req.body);
 
@@ -289,10 +293,10 @@ postsRouter.put('/:postId', async (req, res) => {
 postsRouter.delete('/:postId', async (req, res) => {
   try {
     const { postId } = req.params;
-    const userId = req.headers['x-user-id'] as string || req.body.userId;
+    const { userId, isAuthenticated } = getAuth(req);
 
-    if (!userId) {
-      return apiError(res, 'Unauthorized - User ID required', 'UNAUTHORIZED', 401);
+    if (!userId || !isAuthenticated) {
+      return apiError(res, 'Unauthorized - Authentication required', 'UNAUTHORIZED', 401);
     }
 
     // Check if post exists and belongs to user
@@ -323,12 +327,13 @@ postsRouter.delete('/:postId', async (req, res) => {
 // POST /api/posts/:postId/comments - Create comment
 postsRouter.post('/:postId/comments', async (req, res) => {
   try {
-    const { postId } = req.params;
-    const userId = req.headers['x-user-id'] as string || req.body.userId;
+    const { userId, isAuthenticated } = getAuth(req);
 
-    if (!userId) {
-      return apiError(res, 'Unauthorized - User ID required', 'UNAUTHORIZED', 401);
+    if (!userId || !isAuthenticated) {
+      return apiError(res, 'Unauthorized - Authentication required', 'UNAUTHORIZED', 401);
     }
+
+    const { postId } = req.params;
 
     // Check if post exists
     const [existingPost] = await db.select().from(posts).where(eq(posts.id, postId)).limit(1);

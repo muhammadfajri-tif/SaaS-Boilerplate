@@ -34,6 +34,7 @@ export type Post = {
   content: string;
   tags: Tag[];
   comments: Comment[];
+  user: string;
 };
 
 export type Posts = {

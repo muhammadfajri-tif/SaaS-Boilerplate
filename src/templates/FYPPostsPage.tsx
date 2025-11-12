@@ -1,11 +1,12 @@
 'use client';
 
 import type { Post, Tag } from '@/types/Post';
+import { useAuth } from '@clerk/nextjs';
 import { Plus } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 
+import { useRouter } from 'next/navigation';
 import { useEffect, useMemo, useState } from 'react';
 // import { useToast } from '@/hooks/use-toast';
 import { toast } from 'sonner';
@@ -17,16 +18,14 @@ import { PostCardSkeleton, RecommendedPostSkeleton, SearchFilterSkeleton } from 
 import { Button } from '@/components/ui/button';
 import { Section } from '@/features/landing/Section';
 import { postsService, tagsService } from '@/libs/api';
-import { setUserId } from '@/libs/auth';
 import { BlogNavbar } from '@/templates/BlogNavbar';
 
 export const FYPPostsPage = () => {
   const t = useTranslations('FYPPosts');
   const router = useRouter();
+  const { userId, isSignedIn, isLoaded } = useAuth();
+  const [currentUserId, setCurrentUserId] = useState<string>(isSignedIn ? userId : '');
   // const { toast } = useToast();
-
-  // Mock current user
-  const currentUserId = 'john_doe';
 
   // Loading states
   const [isLoadingPosts, setIsLoadingPosts] = useState(true);
@@ -54,9 +53,9 @@ export const FYPPostsPage = () => {
   // Fetch data on component mount
   useEffect(() => {
     const fetchData = async () => {
-      // Set user ID for authentication
-      setUserId(currentUserId);
-
+      if (isLoaded) {
+        setCurrentUserId(userId!);
+      }
       try {
         // Fetch posts and tags in parallel
         const [fetchedPosts, fetchedTags] = await Promise.all([
@@ -76,7 +75,7 @@ export const FYPPostsPage = () => {
     };
 
     fetchData();
-  }, [currentUserId]);
+  }, [userId, isLoaded]);
 
   // Filter posts based on search query and selected tags
   const filteredPosts = useMemo(() => {

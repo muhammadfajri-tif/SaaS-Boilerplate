@@ -1,8 +1,11 @@
 'use client';
 
-import { X } from 'lucide-react';
-import { useState } from 'react';
+import type { Post } from '@/types/Post';
+import { useUser } from '@clerk/nextjs';
 
+import { X } from 'lucide-react';
+import { LoaderCircle } from 'lucide-react';
+import { useState } from 'react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import {
@@ -17,15 +20,6 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { tags as allTags } from '@/data/dummy';
-
-type Post = {
-  id: string;
-  userId: string;
-  title: string;
-  content: string;
-  tags: Array<{ id: string; name: string }>;
-  comments: any[];
-};
 
 type PostFormDialogProps = {
   open: boolean;
@@ -48,6 +42,7 @@ export function PostFormDialog({
     post?.tags.map(t => t.id) || [],
   );
   const [errors, setErrors] = useState<{ title?: string; content?: string }>({});
+  const { user, isLoaded } = useUser();
 
   const validate = () => {
     const newErrors: { title?: string; content?: string } = {};
@@ -77,11 +72,12 @@ export function PostFormDialog({
 
     const newPost: Post = {
       id: post?.id || `temp-${Date.now()}`,
-      userId: 'john_doe', // Mock user
+      userId: user!.id,
       title: title.trim(),
       content: content.trim(),
       tags: selectedTags,
       comments: post?.comments || [],
+      user: '',
     };
 
     onSave(newPost);
@@ -104,6 +100,10 @@ export function PostFormDialog({
         : [...prev, tagId],
     );
   };
+
+  if (!isLoaded) {
+    return <LoaderCircle className="h-4 w-4 animate-spin" />;
+  }
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>

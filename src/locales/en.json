@@ -89,6 +89,7 @@
   "DashboardLayout": {
     "home": "Home",
     "todos": "Todos",
+    "blogs": "Blogs",
     "members": "Members",
     "billing": "Billing",
     "settings": "Settings"

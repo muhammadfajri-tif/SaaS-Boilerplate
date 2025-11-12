@@ -1,16 +1,16 @@
 'use client';
 
 import type { Post } from '@/types/Post';
+import { useUser } from '@clerk/nextjs';
 import { ArrowLeft, Calendar, Facebook, Link2, Linkedin, MessageCircle, Twitter, User } from 'lucide-react';
 import Link from 'next/link';
-import { useParams, useRouter } from 'next/navigation';
 
+import { useParams, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { ExportPDFButton } from '@/components/ExportPDFButton';
 import { MarkdownPreviewComponent } from '@/components/MarkdownPreview';
 import { BlogPostDetailSkeleton } from '@/components/skeletons/PostSkeletons';
 import { Button } from '@/components/ui/button';
-import { users } from '@/data/dummy';
 import { Section } from '@/features/landing/Section';
 import { postsService } from '@/libs/api';
 import { BlogNavbar } from '@/templates/BlogNavbar';
@@ -18,13 +18,14 @@ import { BlogNavbar } from '@/templates/BlogNavbar';
 export default function BlogPostDetailPage() {
   const params = useParams();
   const router = useRouter();
+  const { isSignedIn } = useUser();
   const postId = params.postId as string;
 
   const [post, setPost] = useState<Post>();
   const [isLoading, setIsLoading] = useState(true);
 
   // Find author
-  const author = post ? users.find(u => u.username === post.userId) : null; // get list of users
+  const author = post ? post.user : null; // get list of users
 
   // Mock comment functionality
   const [comments, setComments] = useState(post?.comments || []);
@@ -198,9 +199,7 @@ export default function BlogPostDetailPage() {
                 </div>
                 <div className="flex-1">
                   <p className="font-semibold text-gray-900 dark:text-white">
-                    {author
-                      ? `${author.first_name} ${author.last_name}`
-                      : post.userId}
+                    {author || post.userId}
                   </p>
                   <div className="flex items-center gap-4 text-sm text-gray-600 dark:text-gray-400">
                     <span className="flex items-center gap-1">
@@ -235,6 +234,7 @@ export default function BlogPostDetailPage() {
                 {/* Add Comment Form */}
                 <form onSubmit={handleAddComment} className="mb-8">
                   <textarea
+                    disabled={!isSignedIn}
                     value={newComment}
                     onChange={e => setNewComment(e.target.value)}
                     placeholder="Share your thoughts..."
@@ -242,7 +242,7 @@ export default function BlogPostDetailPage() {
                     className="w-full rounded-lg border border-gray-200 bg-transparent px-4 py-3 text-gray-900 placeholder:text-gray-400 focus:border-gray-400 focus:outline-none focus:ring-0 dark:border-gray-700 dark:text-white dark:placeholder:text-gray-600"
                   />
                   <div className="mt-3 flex justify-end">
-                    <Button type="submit" disabled={isSubmitting || !newComment.trim()}>
+                    <Button type="submit" disabled={!isSignedIn || isSubmitting || !newComment.trim()}>
                       {isSubmitting ? 'Posting...' : 'Post Comment'}
                     </Button>
                   </div>
@@ -300,9 +300,7 @@ export default function BlogPostDetailPage() {
                     </div>
                     <div>
                       <p className="text-sm font-semibold text-gray-900 dark:text-white">
-                        {author
-                          ? `${author.first_name} ${author.last_name}`
-                          : post.userId}
+                        {author || post.userId}
                       </p>
                       <p className="text-xs text-gray-600 dark:text-gray-400">
                         @
@@ -366,7 +364,7 @@ export default function BlogPostDetailPage() {
                     postId={post.id}
                     postTitle={post.title}
                     postContent={post.content}
-                    authorName={author ? `${author.first_name} ${author.last_name}` : post.userId}
+                    authorName={author || post.userId}
                     tags={post.tags.map(tag => tag.name)}
                     createdAt={new Date()}
                   />

@@ -1,9 +1,11 @@
 import type { Metadata } from 'next';
 
+import { enUS, frFR } from '@clerk/localizations';
+import { ClerkProvider } from '@clerk/nextjs';
 import { NextIntlClientProvider } from 'next-intl';
 import { Toaster } from 'sonner';
-
 import { ThemeProvider } from '@/components/ThemeProvider';
+import { AppConfig } from '@/utils/AppConfig';
 import { AllLocales } from '@/utils/AppConfig';
 import '@/styles/global.css';
 
@@ -52,6 +54,23 @@ export default async function RootLayout(props: {
     messages = (await import(`@/locales/en.json`)).default;
   }
 
+  let clerkLocale = enUS;
+  let signInUrl = '/sign-in';
+  let signUpUrl = '/sign-up';
+  let dashboardUrl = '/dashboard';
+  let afterSignOutUrl = '/';
+
+  if (params.locale === 'fr') {
+    clerkLocale = frFR;
+  }
+
+  if (params.locale !== AppConfig.defaultLocale) {
+    signInUrl = `/${params.locale}${signInUrl}`;
+    signUpUrl = `/${params.locale}${signUpUrl}`;
+    dashboardUrl = `/${params.locale}${dashboardUrl}`;
+    afterSignOutUrl = `/${params.locale}${afterSignOutUrl}`;
+  }
+
   // The `suppressHydrationWarning` in <html> is used to prevent hydration errors caused by `next-themes`.
   // Solution provided by the package itself: https://github.com/pacocoursey/next-themes?tab=readme-ov-file#with-app
 
@@ -79,8 +98,16 @@ export default async function RootLayout(props: {
             locale={params.locale}
             messages={messages}
           >
-            {props.children}
-
+            <ClerkProvider
+              localization={clerkLocale}
+              signInUrl={signInUrl}
+              signUpUrl={signUpUrl}
+              signInFallbackRedirectUrl={dashboardUrl}
+              signUpFallbackRedirectUrl={dashboardUrl}
+              afterSignOutUrl={afterSignOutUrl}
+            >
+              {props.children}
+            </ClerkProvider>
             <Toaster />
           </NextIntlClientProvider>
         </ThemeProvider>

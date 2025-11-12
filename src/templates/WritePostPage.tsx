@@ -1,9 +1,10 @@
 'use client';
 
 import type { Tag } from '@/types/Post';
+import { useUser } from '@clerk/nextjs';
 import { Plus, X } from 'lucide-react';
 import { useTranslations } from 'next-intl';
-import { useRouter } from 'next/navigation';
+import { redirect, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
 import { MarkdownEditor } from '@/components/MarkdownEditor';
@@ -22,6 +23,11 @@ export const WritePostPage = () => {
   const [customTagInput, setCustomTagInput] = useState('');
   const [errors, setErrors] = useState<{ title?: string; content?: string; tags?: string }>({});
   const [isPublishing, setIsPublishing] = useState(false);
+  const { isSignedIn } = useUser();
+
+  if (!isSignedIn) {
+    redirect('/sign-in');
+  }
 
   useEffect(() => {
     const fetchTags = async () => {

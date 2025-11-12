@@ -1,5 +1,4 @@
 import { getTranslations } from 'next-intl/server';
-
 import { MyPostsPage } from '@/templates/MyPostsPage';
 
 export async function generateMetadata(props: { params: Promise<{ locale: string }> }) {

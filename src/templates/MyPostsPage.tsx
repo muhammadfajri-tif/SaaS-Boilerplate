@@ -1,10 +1,11 @@
 'use client';
 
 import type { Post } from '@/types/Post';
+import { useUser } from '@clerk/nextjs';
 import { Edit, Trash2 } from 'lucide-react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 
+import { redirect, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
 import { MyPostCardSkeleton } from '@/components/skeletons/PostSkeletons';
@@ -15,11 +16,16 @@ import { BlogNavbar } from '@/templates/BlogNavbar';
 
 export const MyPostsPage = () => {
   const router = useRouter();
-  const currentUserId = 'john_doe'; // Mock current user
 
   const [myPosts, setMyPosts] = useState<Post[]>([]);
   const [deletingId, setDeletingId] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const { isSignedIn, user } = useUser();
+  const currentUserId = user?.id;
+
+  if (!isSignedIn) {
+    redirect('/sign-in');
+  }
 
   const fetchPosts = async () => {
     try {
@@ -36,6 +42,7 @@ export const MyPostsPage = () => {
 
   useEffect(() => {
     fetchPosts();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentUserId]);
 
   const handleDelete = async (postId: string) => {
