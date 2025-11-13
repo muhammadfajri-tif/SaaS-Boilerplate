@@ -25,6 +25,7 @@ export type Comment = {
   postId: string;
   userId: string;
   content: string;
+  user: string;
 };
 
 export type Post = {

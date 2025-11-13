@@ -268,11 +268,10 @@ export const FYPPostsPage = () => {
                             <article className="group my-10 cursor-pointer pb-6 border-b border-gray-100 last:border-0 last:pb-0 dark:border-gray-800">
                               <div className="mb-3 flex items-center gap-2">
                                 <div className="flex size-6 items-center justify-center rounded-full bg-gray-900 text-xs font-bold text-white dark:bg-white dark:text-gray-900">
-                                  {post.userId.charAt(0).toUpperCase()}
+                                  {post.user.charAt(0).toUpperCase()}
                                 </div>
                                 <span className="text-xs font-medium text-gray-900 dark:text-white">
-                                  @
-                                  {post.userId}
+                                  {post.user}
                                 </span>
                               </div>
                               <h4 className="mb-3 line-clamp-2 text-sm font-bold text-gray-900 transition-colors group-hover:text-gray-600 dark:text-white dark:group-hover:text-gray-400">

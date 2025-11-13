@@ -140,8 +140,9 @@ postsRouter.post('/', async (req, res) => {
 postsRouter.get('/:postId', async (req, res) => {
   try {
     const { postId } = req.params;
-
     const [post] = await db.select().from(posts).where(eq(posts.id, postId)).limit(1);
+    const { data: users } = await clerkClient.users.getUserList();
+    const user = users.find(user => user.id === post.userId);
 
     if (!post) {
       return apiError(res, 'Post not found', 'POST_NOT_FOUND', 404);
@@ -164,12 +165,21 @@ postsRouter.get('/:postId', async (req, res) => {
       .where(eq(comments.postId, postId))
       .orderBy(sql`${comments.createdAt} ASC`);
 
+    const postCommentsWithUser = postComments.map((comment) => {
+      const user = users.find(user => comment.userId === user.id);
+      return {
+        ...comment,
+        user: user ? `${user.firstName} ${user.lastName}` : comment.userId,
+      };
+    });
+
     return apiSuccess(
       res,
       {
         ...post,
         tags: postTagsData,
-        comments: postComments,
+        comments: postCommentsWithUser,
+        user: user ? `${user.firstName} ${user.lastName}` : post.userId,
       },
       'Post retrieved successfully',
     );
@@ -368,7 +378,7 @@ postsRouter.post('/:postId/comments', async (req, res) => {
 postsRouter.get('/:postId/comments', async (req, res) => {
   try {
     const { postId } = req.params;
-
+    const { data: users } = await clerkClient.users.getUserList();
     // Check if post exists
     const [existingPost] = await db.select().from(posts).where(eq(posts.id, postId)).limit(1);
 
@@ -383,7 +393,15 @@ postsRouter.get('/:postId/comments', async (req, res) => {
       .where(eq(comments.postId, postId))
       .orderBy(sql`${comments.createdAt} ASC`);
 
-    return apiSuccess(res, postComments, 'Comments retrieved successfully');
+    const postCommentsWithUser = postComments.map((comment) => {
+      const user = users.find(user => comment.userId === user.id);
+      return {
+        ...comment,
+        user: user ? `${user.firstName} ${user.lastName}` : comment.userId,
+      };
+    });
+
+    return apiSuccess(res, postCommentsWithUser, 'Comments retrieved successfully');
   } catch (error) {
     console.error('Error fetching comments:', error);
     return apiError(res, 'Failed to fetch comments', 'FETCH_COMMENTS_ERROR', 500);

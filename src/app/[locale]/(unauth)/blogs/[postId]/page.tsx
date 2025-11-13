@@ -18,14 +18,11 @@ import { BlogNavbar } from '@/templates/BlogNavbar';
 export default function BlogPostDetailPage() {
   const params = useParams();
   const router = useRouter();
-  const { isSignedIn } = useUser();
+  const { isSignedIn, user } = useUser();
   const postId = params.postId as string;
 
   const [post, setPost] = useState<Post>();
   const [isLoading, setIsLoading] = useState(true);
-
-  // Find author
-  const author = post ? post.user : null; // get list of users
 
   // Mock comment functionality
   const [comments, setComments] = useState(post?.comments || []);
@@ -108,7 +105,7 @@ export default function BlogPostDetailPage() {
     setIsSubmitting(true);
 
     const comment = await postsService.createComment(postId, {
-      userId: 'alice', // TODO: get user data
+      userId: user!.id,
       content: newComment,
     });
 
@@ -195,11 +192,11 @@ export default function BlogPostDetailPage() {
               {/* Author Info */}
               <div className="mb-8 flex items-center gap-4 border-b border-gray-200 pb-8 dark:border-gray-800">
                 <div className="flex size-12 items-center justify-center rounded-full bg-gray-900 text-lg font-bold text-white dark:bg-white dark:text-gray-900">
-                  {post.userId.charAt(0).toUpperCase()}
+                  {post.user.charAt(0).toUpperCase()}
                 </div>
                 <div className="flex-1">
                   <p className="font-semibold text-gray-900 dark:text-white">
-                    {author || post.userId}
+                    {post.user}
                   </p>
                   <div className="flex items-center gap-4 text-sm text-gray-600 dark:text-gray-400">
                     <span className="flex items-center gap-1">
@@ -264,12 +261,11 @@ export default function BlogPostDetailPage() {
                           >
                             <div className="mb-2 flex items-center gap-3">
                               <div className="flex size-10 items-center justify-center rounded-full bg-gray-900 text-sm font-bold text-white dark:bg-white dark:text-gray-900">
-                                {comment.userId.charAt(0).toUpperCase()}
+                                {comment.user.charAt(0).toUpperCase()}
                               </div>
                               <div>
                                 <p className="font-medium text-gray-900 dark:text-white">
-                                  @
-                                  {comment.userId}
+                                  {comment.user}
                                 </p>
                               </div>
                             </div>
@@ -296,15 +292,11 @@ export default function BlogPostDetailPage() {
                   </div>
                   <div className="flex items-center gap-3">
                     <div className="flex size-10 items-center justify-center rounded-full bg-gray-900 text-sm font-bold text-white dark:bg-white dark:text-gray-900">
-                      {post.userId.charAt(0).toUpperCase()}
+                      {post.user.charAt(0).toUpperCase()}
                     </div>
                     <div>
                       <p className="text-sm font-semibold text-gray-900 dark:text-white">
-                        {author || post.userId}
-                      </p>
-                      <p className="text-xs text-gray-600 dark:text-gray-400">
-                        @
-                        {post.userId}
+                        {post.user}
                       </p>
                     </div>
                   </div>
@@ -364,7 +356,7 @@ export default function BlogPostDetailPage() {
                     postId={post.id}
                     postTitle={post.title}
                     postContent={post.content}
-                    authorName={author || post.userId}
+                    authorName={post.user}
                     tags={post.tags.map(tag => tag.name)}
                     createdAt={new Date()}
                   />
