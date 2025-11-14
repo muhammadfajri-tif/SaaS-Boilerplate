@@ -8,6 +8,7 @@ import Link from 'next/link';
 import { redirect, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
+import { MarkdownPreviewComponent } from '@/components/MarkdownPreview';
 import { MyPostCardSkeleton } from '@/components/skeletons/PostSkeletons';
 import { Button } from '@/components/ui/button';
 import { Section } from '@/features/landing/Section';
@@ -91,7 +92,7 @@ export const MyPostsPage = () => {
                 </div>
                 <Button
                   onClick={() => router.push('/blogs/write')}
-                  className="bg-green-600 hover:bg-green-700 dark:bg-green-600 dark:hover:bg-green-700"
+                  className="h-9 rounded-full bg-gray-900 px-5 text-sm font-medium text-white hover:bg-gray-800 dark:bg-gray-100 dark:text-gray-900 dark:hover:bg-gray-200"
                 >
                   Write a story
                 </Button>
@@ -138,9 +139,9 @@ export const MyPostsPage = () => {
                                 <h2 className="mb-2 text-2xl font-bold text-gray-900 transition-colors group-hover:text-gray-600 dark:text-white dark:group-hover:text-gray-300">
                                   {post.title}
                                 </h2>
-                                <p className="line-clamp-2 text-base text-gray-600 dark:text-gray-400">
-                                  {post.content}
-                                </p>
+                                <div className="line-clamp-2 text-base text-gray-600 dark:text-gray-400">
+                                  <MarkdownPreviewComponent content={post.content} />
+                                </div>
                               </div>
                               <div className="flex items-center gap-4 text-sm text-gray-500 dark:text-gray-400">
                                 <span>
@@ -166,7 +167,7 @@ export const MyPostsPage = () => {
                                 size="sm"
                                 onClick={() => handleDelete(post.id)}
                                 disabled={deletingId === post.id}
-                                className="text-red-600 hover:bg-red-50 hover:text-red-700 dark:text-red-400 dark:hover:bg-red-950"
+                                className="text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-400 dark:hover:bg-gray-800 dark:hover:text-gray-100"
                               >
                                 <Trash2 className="size-4" />
                               </Button>
@@ -187,7 +188,7 @@ export const MyPostsPage = () => {
                       </p>
                       <Button
                         onClick={() => router.push('/blogs/write')}
-                        className="bg-green-600 hover:bg-green-700 dark:bg-green-600 dark:hover:bg-green-700"
+                        className="h-9 rounded-full bg-gray-900 px-5 text-sm font-medium text-white hover:bg-gray-800 dark:bg-gray-100 dark:text-gray-900 dark:hover:bg-gray-200"
                       >
                         Write your first story
                       </Button>

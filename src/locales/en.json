@@ -186,11 +186,11 @@
     "article4_date": "October 8, 2025"
   },
   "FYPPosts": {
-    "meta_title": "Metion - Discover Amazing Stories",
-    "meta_description": "Explore inspiring stories, articles, and insights from creative writers around the world on Metion.",
+    "meta_title": "Discover Amazing Stories",
+    "meta_description": "Explore inspiring stories, articles, and insights from creative writers around the world.",
     "section_subtitle": "Welcome to",
-    "section_title": "Metion",
-    "section_description": "Discover inspiring stories and articles from talented writers worldwide.",
+    "section_title": "",
+    "section_description": "",
     "showing_results": "Found {count} article(s)",
     "no_results_title": "No articles found",
     "no_results_description": "Try different keywords or explore other topics."

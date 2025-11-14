@@ -2,7 +2,7 @@
 
 import type { Post, Tag } from '@/types/Post';
 import { useAuth } from '@clerk/nextjs';
-import { Plus } from 'lucide-react';
+import { Hash, Plus } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import Link from 'next/link';
 
@@ -159,23 +159,29 @@ export const FYPPostsPage = () => {
     <>
       <BlogNavbar />
       <div className="min-h-screen bg-white pt-24 dark:bg-gray-950">
-        {/* Simple Header */}
-        <div className="border-b border-gray-200 dark:border-gray-800">
-          <Section className="py-8">
-            <h1 className="mb-2 text-5xl font-bold text-gray-900 dark:text-white md:text-6xl">
-              {t('section_title')}
-            </h1>
-            <p className="text-xl text-gray-600 dark:text-gray-400">
-              {t('section_description')}
-            </p>
-          </Section>
-        </div>
+        {/* Simple Header - Hidden when empty */}
+        {(t('section_title') || t('section_description')) && (
+          <div className="border-b border-gray-200 dark:border-gray-800">
+            <Section className="py-8">
+              {t('section_title') && (
+                <h1 className="mb-2 text-5xl font-bold text-gray-900 dark:text-white md:text-6xl">
+                  {t('section_title')}
+                </h1>
+              )}
+              {t('section_description') && (
+                <p className="text-xl text-gray-600 dark:text-gray-400">
+                  {t('section_description')}
+                </p>
+              )}
+            </Section>
+          </div>
+        )}
 
         {/* Main Content */}
         <Section className="py-12">
           <div className="grid gap-12 lg:grid-cols-12">
             {/* Left Sidebar - Search & Filter */}
-            <aside className="lg:col-span-3">
+            <aside className="lg:col-span-3 lg:border-r lg:border-gray-200 lg:pr-8 dark:lg:border-gray-800">
               <div className="sticky top-8">
                 {isLoadingTags
                   ? (
@@ -187,13 +193,14 @@ export const FYPPostsPage = () => {
                         onTagsChange={setSelectedTags}
                         selectedTags={selectedTags}
                         availableTags={availableTags}
+                        icon={<Hash className="size-4" />}
                       />
                     )}
               </div>
             </aside>
 
             {/* Main Feed */}
-            <main className="lg:col-span-6">
+            <main className="lg:col-span-6 lg:border-r lg:border-gray-200 lg:pr-8 dark:lg:border-gray-800">
               {/* Create Post Button */}
               <div className="mb-6 flex items-center justify-between">
                 <p className="text-sm font-medium text-gray-600 dark:text-gray-400">
@@ -247,7 +254,7 @@ export const FYPPostsPage = () => {
             </main>
 
             {/* Right Sidebar - Recommended Posts */}
-            <aside className="hidden lg:col-span-3 lg:block">
+            <aside className="hidden lg:col-span-3 lg:block lg:pl-0">
               <div className="sticky top-8">
                 <h3 className="mb-4 text-sm font-semibold text-gray-900 dark:text-white">
                   Staff Picks

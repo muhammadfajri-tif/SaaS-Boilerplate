@@ -185,11 +185,11 @@
     "article4_date": "8 octobre 2025"
   },
   "FYPPosts": {
-    "meta_title": "Metion - Découvrez des Histoires Incroyables",
-    "meta_description": "Explorez des histoires inspirantes, articles et idées d'écrivains créatifs du monde entier sur Metion.",
+    "meta_title": "Découvrez des Histoires Incroyables",
+    "meta_description": "Explorez des histoires inspirantes, articles et idées d'écrivains créatifs du monde entier.",
     "section_subtitle": "Bienvenue sur",
-    "section_title": "Metion",
-    "section_description": "Découvrez des histoires inspirantes et des articles d'écrivains talentueux du monde entier.",
+    "section_title": "",
+    "section_description": "",
     "showing_results": "Trouvé {count} article(s)",
     "no_results_title": "Aucun article trouvé",
     "no_results_description": "Essayez d'autres mots-clés ou explorez différents sujets."

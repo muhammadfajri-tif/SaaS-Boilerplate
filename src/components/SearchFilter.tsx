@@ -1,5 +1,7 @@
 'use client';
 
+import type { ReactNode } from 'react';
+
 import { Search, X } from 'lucide-react';
 import { useState } from 'react';
 
@@ -10,6 +12,7 @@ type SearchFilterProps = {
   onTagsChange: (tags: string[]) => void;
   selectedTags: string[];
   availableTags: string[];
+  icon?: ReactNode;
 };
 
 export const SearchFilter = ({
@@ -17,6 +20,7 @@ export const SearchFilter = ({
   onTagsChange,
   selectedTags,
   availableTags,
+  icon,
 }: SearchFilterProps) => {
   const [searchInput, setSearchInput] = useState('');
   const [tagInput, setTagInput] = useState('');
@@ -80,14 +84,22 @@ export const SearchFilter = ({
         >
           Filter by Topic
         </label>
-        <Input
-          id="tag-input"
-          type="text"
-          placeholder="Add topic..."
-          value={tagInput}
-          onChange={e => setTagInput(e.target.value)}
-          onKeyDown={handleTagInputKeyDown}
-        />
+        <div className="relative">
+          {icon && (
+            <div className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
+              {icon}
+            </div>
+          )}
+          <Input
+            id="tag-input"
+            type="text"
+            placeholder="Add topic..."
+            value={tagInput}
+            onChange={e => setTagInput(e.target.value)}
+            onKeyDown={handleTagInputKeyDown}
+            className={icon ? 'pl-10' : ''}
+          />
+        </div>
       </div>
 
       {/* Selected Tags */}
@@ -128,9 +140,10 @@ export const SearchFilter = ({
                   key={tag}
                   onClick={() => addPredefinedTag(tag)}
                   disabled={isSelected}
-                  className="rounded-full border border-gray-300 bg-white px-3 py-1.5 text-xs font-medium text-gray-700 transition-colors hover:border-gray-900 hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-500 dark:hover:bg-gray-800"
+                  className="flex items-center gap-1.5 rounded-full border border-gray-300 bg-white px-3 py-1.5 text-xs font-medium text-gray-700 transition-colors hover:border-gray-900 hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-500 dark:hover:bg-gray-800"
                 >
-                  {lowerTag}
+                  {icon}
+                  <span>{lowerTag}</span>
                 </button>
               );
             })}

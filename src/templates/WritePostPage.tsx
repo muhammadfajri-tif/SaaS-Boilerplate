@@ -98,7 +98,7 @@ export const WritePostPage = () => {
   };
 
   const addCustomTag = () => {
-    const tagName = customTagInput.trim().toUpperCase();
+    const tagName = customTagInput.trim().toLowerCase();
 
     if (!tagName) {
       return;
@@ -148,24 +148,32 @@ export const WritePostPage = () => {
               <button
                 type="button"
                 onClick={() => router.back()}
-                className="text-sm text-gray-600 transition-colors hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-100"
+                className="group flex items-center gap-2 rounded-md px-3 py-1.5 text-sm font-medium text-gray-600 transition-all hover:bg-gray-100 hover:text-gray-900 dark:text-gray-400 dark:hover:bg-gray-800 dark:hover:text-gray-100"
               >
-                {t('back_button')}
+                <svg
+                  className="size-4 transition-transform group-hover:-translate-x-0.5"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                </svg>
+                {t('back_button').replace('← ', '')}
               </button>
             </div>
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2">
               <Button
                 variant="ghost"
                 onClick={() => router.back()}
                 disabled={isPublishing}
-                className="text-gray-600 hover:text-gray-900"
+                className="h-9 rounded-full px-4 text-sm font-medium text-gray-600 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-400 dark:hover:bg-gray-800 dark:hover:text-gray-100"
               >
                 {t('cancel_button')}
               </Button>
               <Button
                 onClick={handlePublish}
                 disabled={isPublishing || !title.trim() || !content.trim()}
-                className="bg-green-600 px-6 hover:bg-green-700 dark:bg-green-600 dark:hover:bg-green-700"
+                className="h-9 rounded-full bg-gray-900 px-5 text-sm font-medium text-white hover:bg-gray-800 disabled:bg-gray-300 disabled:text-gray-500 dark:bg-gray-100 dark:text-gray-900 dark:hover:bg-gray-200 dark:disabled:bg-gray-700 dark:disabled:text-gray-500"
               >
                 {isPublishing ? t('publishing_button') : t('publish_button')}
               </Button>
@@ -219,7 +227,7 @@ export const WritePostPage = () => {
                       key={tag.id}
                       className="inline-flex items-center gap-2 rounded-full bg-gray-900 px-4 py-2 text-sm font-medium text-white dark:bg-white dark:text-gray-900"
                     >
-                      {tag.name}
+                      {tag.name.toLowerCase()}
                       <button
                         type="button"
                         onClick={() => removeTag(tag.id)}
@@ -283,7 +291,7 @@ export const WritePostPage = () => {
                           : 'bg-gray-100 text-gray-700 hover:bg-gray-200 disabled:cursor-not-allowed disabled:opacity-50 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700'
                       }`}
                     >
-                      {tag.name}
+                      {tag.name.toLowerCase()}
                     </button>
                   );
                 })}

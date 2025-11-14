@@ -185,11 +185,11 @@
     "article4_date": "2025年10月8日"
   },
   "FYPPosts": {
-    "meta_title": "Metion - 素晴らしいストーリーを発見",
-    "meta_description": "Metionで世界中のクリエイティブなライターからのインスピレーション溢れるストーリー、記事、洞察を探索しましょう。",
-    "section_subtitle": "ようこそ",
-    "section_title": "Metion",
-    "section_description": "世界中の才能あるライターからのインスピレーション溢れるストーリーと記事を発見。",
+    "meta_title": "素晴らしいストーリーを発見",
+    "meta_description": "世界中のクリエイティブなライターからのインスピレーション溢れるストーリー、記事、洞察を探索しましょう。",
+    "section_subtitle": "へようこそ",
+    "section_title": "",
+    "section_description": "",
     "showing_results": "{count}件の記事が見つかりました",
     "no_results_title": "記事が見つかりません",
     "no_results_description": "他のキーワードを試すか、別のトピックを探索してください。"
