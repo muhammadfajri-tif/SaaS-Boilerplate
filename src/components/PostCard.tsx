@@ -98,7 +98,7 @@ export function PostCard({
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
             <div className="flex size-8 items-center justify-center rounded-full bg-gray-900 text-xs font-bold text-white dark:bg-white dark:text-gray-900">
-              {post.user.charAt(0).toUpperCase()}
+              {post.user && post.user.charAt(0).toUpperCase()}
             </div>
             <span className="text-sm text-gray-600 dark:text-gray-400">
               {post.user}

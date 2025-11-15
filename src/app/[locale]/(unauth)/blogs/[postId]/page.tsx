@@ -192,7 +192,7 @@ export default function BlogPostDetailPage() {
               {/* Author Info */}
               <div className="mb-8 flex items-center gap-4 border-b border-gray-200 pb-8 dark:border-gray-800">
                 <div className="flex size-12 items-center justify-center rounded-full bg-gray-900 text-lg font-bold text-white dark:bg-white dark:text-gray-900">
-                  {post.user.charAt(0).toUpperCase()}
+                  {post.user && post.user.charAt(0).toUpperCase()}
                 </div>
                 <div className="flex-1">
                   <p className="font-semibold text-gray-900 dark:text-white">
@@ -261,7 +261,7 @@ export default function BlogPostDetailPage() {
                           >
                             <div className="mb-2 flex items-center gap-3">
                               <div className="flex size-10 items-center justify-center rounded-full bg-gray-900 text-sm font-bold text-white dark:bg-white dark:text-gray-900">
-                                {comment.user.charAt(0).toUpperCase()}
+                                {comment.user && comment.user.charAt(0).toUpperCase()}
                               </div>
                               <div>
                                 <p className="font-medium text-gray-900 dark:text-white">
@@ -292,7 +292,7 @@ export default function BlogPostDetailPage() {
                   </div>
                   <div className="flex items-center gap-3">
                     <div className="flex size-10 items-center justify-center rounded-full bg-gray-900 text-sm font-bold text-white dark:bg-white dark:text-gray-900">
-                      {post.user.charAt(0).toUpperCase()}
+                      {post.user && post.user.charAt(0).toUpperCase()}
                     </div>
                     <div>
                       <p className="text-sm font-semibold text-gray-900 dark:text-white">
