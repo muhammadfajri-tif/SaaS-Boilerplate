@@ -19,7 +19,7 @@ app.use(helmet());
 
 // Clerk middleware
 app.use(clerkMiddleware({
-  authorizedParties: [process.env.FRONTEND_URL || 'https://example.com/', process.env.FRONTEND_URL_DEV || 'http://localhost:3000'],
+  authorizedParties: process.env.CORS_ORIGINS?.split(',') || ['http://localhost:3000', 'https://example.com'],
 }));
 
 // CORS configuration
