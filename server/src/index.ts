@@ -17,15 +17,16 @@ const PORT = process.env.PORT || 3001;
 // Security middleware
 app.use(helmet());
 
+const allowedOrigins = process.env.CORS_ORIGINS?.split(',') || ['http://localhost:3000'];
+
 // Clerk middleware
 app.use(clerkMiddleware({
-  authorizedParties: process.env.CORS_ORIGINS?.split(',') || ['http://localhost:3000', 'https://example.com'],
+  authorizedParties: allowedOrigins,
 }));
 
 // CORS configuration
-const corsOrigins = process.env.CORS_ORIGINS?.split(',') || ['http://localhost:3000'];
 app.use(cors({
-  origin: corsOrigins,
+  origin: allowedOrigins,
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
   allowedHeaders: ['Content-Type', 'Authorization', 'x-user-id'],
