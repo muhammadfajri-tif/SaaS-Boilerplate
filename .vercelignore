@@ -1,2 +1,4 @@
 docker/
 server/
+.github/workflows/backend-deploy.yml
+.github/workflows/metion-backend-AutoDeployTrigger-eaeeb21e-a9de-4f09-9ef5-31f898cd29a4.yml
