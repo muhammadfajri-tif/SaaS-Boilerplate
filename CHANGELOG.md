@@ -1,3 +1,23 @@
+# [1.1.0](https://github.com/muhammadfajri-tif/SaaS-Boilerplate/compare/v1.0.1...v1.1.0) (2025-11-15)
+
+
+### Bug Fixes
+
+* **db:** use username instead of user id ([1a2c00e](https://github.com/muhammadfajri-tif/SaaS-Boilerplate/commit/1a2c00ed39f34e1d48faf92c523ff0cb5f482a1a))
+* exclude server folder from tsconfig and fix linting errors ([70c52fd](https://github.com/muhammadfajri-tif/SaaS-Boilerplate/commit/70c52fde797d0c7f52f41ff20099ab8c83bbd6f7))
+* fix access to potentially undefined values ([b912423](https://github.com/muhammadfajri-tif/SaaS-Boilerplate/commit/b912423c1b7b5a278aaad2d34c08d60998ff1974))
+* **read post:** fix author name and commenter's name ([e21d40c](https://github.com/muhammadfajri-tif/SaaS-Boilerplate/commit/e21d40c5a8c6eb30c8677a23b7a5d1f1f656669e))
+
+
+### Features
+
+* add markdown preview in FYP posts and convert all tags to lowercase ([a40822a](https://github.com/muhammadfajri-tif/SaaS-Boilerplate/commit/a40822af234e166a4042ed0abebf4814f656db50))
+* add token for authorization ([#12](https://github.com/muhammadfajri-tif/SaaS-Boilerplate/issues/12)) ([c8a56c7](https://github.com/muhammadfajri-tif/SaaS-Boilerplate/commit/c8a56c713807a068b1f9a06f3f765093883c27e0))
+* improve UI with monochrome design and add topic icons ([4eb0381](https://github.com/muhammadfajri-tif/SaaS-Boilerplate/commit/4eb03810a5ead45bc903cea7bb14019baf48707c))
+* liquid navbar ([2742144](https://github.com/muhammadfajri-tif/SaaS-Boilerplate/commit/2742144976a745f5bf1b0e116e4fd2d47c5921f4))
+* rebrand to Metion, add elegant pen nib logo, implement auto-hide navbar, and prepare liquid-glass integration ([9c9cbf1](https://github.com/muhammadfajri-tif/SaaS-Boilerplate/commit/9c9cbf1d1d302c6b0f98df068159ee6e7e64edb8))
+* sticky navbar ([e7fbbee](https://github.com/muhammadfajri-tif/SaaS-Boilerplate/commit/e7fbbee509d7dcd076dad4fe904d60cb292d4b5e))
+
 ## [1.0.1](https://github.com/RioAgasta/SaaS-Boilerplate/compare/v1.0.0...v1.0.1) (2025-11-06)
 
 

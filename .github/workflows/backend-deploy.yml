@@ -14,23 +14,23 @@
 name: Backend CI/CD
 
 on:
-  push:
-    branches:
-      - main
-      - master
-      - develop
-    paths:
-      - 'server/**'
-      - docker/Dockerfile.backend
-      - .github/workflows/backend-deploy.yml
-  pull_request:
-    branches:
-      - main
-      - master
-      - develop
-    paths:
-      - 'server/**'
-      - docker/Dockerfile.backend
+  # push:
+  #   branches:
+  #     - main
+  #     - master
+  #     - develop
+  #   paths:
+  #     - 'server/**'
+  #     - docker/Dockerfile.backend
+  #     - .github/workflows/backend-deploy.yml
+  # pull_request:
+  #   branches:
+  #     - main
+  #     - master
+  #     - develop
+  #   paths:
+  #     - 'server/**'
+  #     - docker/Dockerfile.backend
   workflow_dispatch:
     inputs:
       environment:
