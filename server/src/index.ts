@@ -18,7 +18,9 @@ const PORT = process.env.PORT || 3001;
 app.use(helmet());
 
 // Clerk middleware
-app.use(clerkMiddleware());
+app.use(clerkMiddleware({
+  authorizedParties: [process.env.FRONTEND_URL || 'https://example.com/', process.env.FRONTEND_URL_DEV || 'http://localhost:3000'],
+}));
 
 // CORS configuration
 const corsOrigins = process.env.CORS_ORIGINS?.split(',') || ['http://localhost:3000'];

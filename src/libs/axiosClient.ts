@@ -13,6 +13,9 @@ const axiosClient = axios.create({
 // Request interceptor to add user authentication
 axiosClient.interceptors.request.use(
   async (config) => {
+    const token = localStorage.getItem('token');
+    config.headers.Authorization = `Bearer ${token}`;
+
     return config;
   },
   (error) => {

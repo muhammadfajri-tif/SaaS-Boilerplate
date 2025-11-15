@@ -23,7 +23,7 @@ import { BlogNavbar } from '@/templates/BlogNavbar';
 export const FYPPostsPage = () => {
   const t = useTranslations('FYPPosts');
   const router = useRouter();
-  const { userId, isSignedIn, isLoaded } = useAuth();
+  const { userId, isSignedIn, isLoaded, getToken } = useAuth();
   const [currentUserId, setCurrentUserId] = useState<string>(isSignedIn ? userId : '');
   // const { toast } = useToast();
 
@@ -49,6 +49,17 @@ export const FYPPostsPage = () => {
     () => Array.from(new Set(allTags.map(tag => tag.name))),
     [allTags],
   );
+
+  useEffect(() => {
+    const setToken = async () => {
+      if (isSignedIn) {
+        const token = await getToken();
+        localStorage.setItem('token', token || '');
+      }
+    };
+
+    setToken();
+  }, [isSignedIn, getToken]);
 
   // Fetch data on component mount
   useEffect(() => {
