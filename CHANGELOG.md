@@ -1,3 +1,11 @@
+## [1.1.1](https://github.com/muhammadfajri-tif/SaaS-Boilerplate/compare/v1.1.0...v1.1.1) (2025-11-15)
+
+
+### Bug Fixes
+
+* **token:** add token to authorization header ([625c5f3](https://github.com/muhammadfajri-tif/SaaS-Boilerplate/commit/625c5f3f079ac6e5019c3923a1db6bf7eb23bc80))
+* use CORS environment variable for clerk middleware ([bdd56ae](https://github.com/muhammadfajri-tif/SaaS-Boilerplate/commit/bdd56aec0406dd039f44d3aced4d2342329d84b5))
+
 # [1.1.0](https://github.com/muhammadfajri-tif/SaaS-Boilerplate/compare/v1.0.1...v1.1.0) (2025-11-15)
 
 
